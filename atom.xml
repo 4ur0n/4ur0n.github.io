@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Auron&#39;s blog</title>
+  <icon>http://example.com/icon.png</icon>
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2025-09-02T15:53:06.546Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>Auron</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AIS3 2025 pre-exam &amp; myfirst ctf write up</title>
+    <link href="http://example.com/2025/08/31/AIS3%202025%20pre-exam%20&amp;%20myfirst%20ctf%20write%20up/"/>
+    <id>http://example.com/2025/08/31/AIS3%202025%20pre-exam%20&amp;%20myfirst%20ctf%20write%20up/</id>
+    <published>2025-08-31T09:49:32.000Z</published>
+    <updated>2025-09-02T15:53:06.546Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;ais3-2025-pre-exam-myfirst-ctf-write-up&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#ais3-2025-pre-exam-myfirst-ctf-write-up&quot;&gt;&lt;/a&gt; AIS3</summary>
+        
+      
+    
+    
+    
+    
+    <category term="writeup" scheme="http://example.com/tags/writeup/"/>
+    
+  </entry>
+  
+</feed>
