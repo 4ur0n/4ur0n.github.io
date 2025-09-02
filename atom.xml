@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2025-09-02T02:46:35.887Z</updated>
+  <updated>2025-09-02T14:05:57.813Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://example.com/2025/09/02/tmp/"/>
+    <id>http://example.com/2025/09/02/tmp/</id>
+    <published>2025-09-02T14:05:55.867Z</published>
+    <updated>2025-09-02T14:05:57.813Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;總結&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#總結&quot;&gt;&lt;/a&gt; 總結&lt;/h1&gt;
+&lt;p&gt;這次的系列主題從最基礎的 ASM 和 ELF 開始，一步步帶大家了解程式在底層的運作方式，從記憶體結構、暫存器使用，到 Stack 與</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>AIS3 2025 pre-exam &amp; myfirst ctf write up</title>
