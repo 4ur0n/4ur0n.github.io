@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2025-11-08T08:55:36.154Z</updated>
+  <updated>2025-11-08T09:09:51.496Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,23 +17,72 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>Heap exploitation</title>
     <link href="http://example.com/2025/11/08/Heap%20exploitation/"/>
     <id>http://example.com/2025/11/08/Heap%20exploitation/</id>
-    <published>2025-11-08T08:55:21.107Z</published>
-    <updated>2025-11-08T08:55:36.154Z</updated>
+    <published>2025-11-08T09:09:32.000Z</published>
+    <updated>2025-11-08T09:09:51.496Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;advanced-binary-exploitation-pwn-heap-exploitation&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;heap-exploitation&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#heap-exploitation&quot;&gt;&lt;/a&gt; Heap exploitation&lt;/h1&gt;
+&lt;h2 id=&quot;ptmalloc2&quot;&gt;&lt;a</summary>
         
       
     
     
     
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Binary exploitation basic 1</title>
+    <link href="http://example.com/2025/11/08/Binary%20exploitation%20basic%201/"/>
+    <id>http://example.com/2025/11/08/Binary%20exploitation%20basic%201/</id>
+    <published>2025-11-08T09:07:32.000Z</published>
+    <updated>2025-11-08T09:09:06.759Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;binary-exploitation-basic-1&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#binary-exploitation-basic-1&quot;&gt;&lt;/a&gt; Binary exploitation basic</summary>
+        
+      
+    
+    
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Binary exploitation basic 2</title>
+    <link href="http://example.com/2025/11/08/Binary%20exploitation%20basic%202/"/>
+    <id>http://example.com/2025/11/08/Binary%20exploitation%20basic%202/</id>
+    <published>2025-11-08T09:07:32.000Z</published>
+    <updated>2025-11-08T09:09:01.243Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;binary-exploitation-basic-2&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#binary-exploitation-basic-2&quot;&gt;&lt;/a&gt; Binary exploitation basic</summary>
+        
+      
+    
+    
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
     
   </entry>
   
