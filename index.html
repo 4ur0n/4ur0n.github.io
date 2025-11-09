@@ -365,10 +365,51 @@ size &amp;lt; 128k
       <div class="post-wrapper">
   <div class="post-wrap-right" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/11/08/Binary%20exploitation%20basic%201/" aria-label="Binary exploitation basic 1"></a>
+      <a class="post-link" href="/2025/11/08/Binary%20exploitation%20basic%202/" aria-label="Binary exploitation basic 2"></a>
     
     
     <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://d-sketon.top/img/_backwebp/bg1.webp" data-sizes="auto" alt="Binary exploitation basic 2" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-11-08</span>
+        
+        <span><span class="icon-pencil"></span>2.3k words</span>
+        <span><span class="icon-clock"></span>9 mins</span>
+      </div>
+      <h2 class="post-title">Binary exploitation basic 2</h2>
+      <article class="post-article">
+        
+           Binary exploitation basic 2
+寫得很爛，所以不知道有哪些會是錯的🫠
+
+objdump -R 
+可以得知binary裡有用到的function, 左邊的offset就是他的GOT table 
+也可以用readelf -St 去查看GOT的位址
+
+每個function的.plt第一行都是jmp QWORD PTR [rip+0x00000]是從一個memory裡拿值出來然後jump上去
+
+左邊尚未call gets, 由於lazy binding的機制所以它都會放成那個function+6的地方,  右邊run過再看他的GOT table就發現已經被填回去了, 所以
+        
+      </article>
+    </div>
+  </div>
+</div>
+      
+    
+      <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/11/08/Binary%20exploitation%20basic%201/" aria-label="Binary exploitation basic 1"></a>
+    
+    
+    <div class="post-cover-left">
       
         
         
@@ -407,47 +448,6 @@ section
  x64 Assembly
 
 
-        
-      </article>
-    </div>
-  </div>
-</div>
-      
-    
-      <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/11/08/Binary%20exploitation%20basic%202/" aria-label="Binary exploitation basic 2"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="https://d-sketon.top/img/_backwebp/bg1.webp" data-sizes="auto" alt="Binary exploitation basic 2" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-11-08</span>
-        
-        <span><span class="icon-pencil"></span>2.3k words</span>
-        <span><span class="icon-clock"></span>9 mins</span>
-      </div>
-      <h2 class="post-title">Binary exploitation basic 2</h2>
-      <article class="post-article">
-        
-           Binary exploitation basic 2
-寫得很爛，所以不知道有哪些會是錯的🫠
-
-objdump -R 
-可以得知binary裡有用到的function, 左邊的offset就是他的GOT table 
-也可以用readelf -St 去查看GOT的位址
-
-每個function的.plt第一行都是jmp QWORD PTR [rip+0x00000]是從一個memory裡拿值出來然後jump上去
-
-左邊尚未call gets, 由於lazy binding的機制所以它都會放成那個function+6的地方,  右邊run過再看他的GOT table就發現已經被填回去了, 所以
         
       </article>
     </div>
